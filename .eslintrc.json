@@ -1,3 +1,43 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "next/core-web-vitals", // Next.js推奨設定
+    "plugin:@typescript-eslint/recommended", // TypeScript推奨設定
+    "plugin:react/recommended", // React推奨設定
+    "plugin:jsx-a11y/recommended", // アクセシビリティの推奨設定
+    "prettier" // Prettierとの連携
+  ],
+  "plugins": [
+    "@typescript-eslint", // TypeScriptのためのプラグイン
+    "react", // Reactプラグイン
+    "react-hooks", // React Hooksのためのプラグイン
+    "jsx-a11y", // アクセシビリティのためのプラグイン
+    "prettier" // Prettierプラグイン
+  ],
+  "parser": "@typescript-eslint/parser", // TypeScriptのパーサ
+  "parserOptions": {
+    "ecmaVersion": 2020, // ECMAScriptのバージョン
+    "sourceType": "module", // ECMAScriptモジュールをサポート
+    "ecmaFeatures": {
+      "jsx": true // JSXをサポート
+    }
+  },
+  "rules": {
+    // ESLintのルールを追加
+    "prettier/prettier": "error", // PrettierのルールをESLintのエラーとして扱う
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ], // 未使用変数のエラーチェック（引数は "_" を許可）
+    "react/react-in-jsx-scope": "off", // Next.jsではReactのインポートが不要
+    "react-hooks/rules-of-hooks": "error", // React Hooksのルールを強制
+    "react-hooks/exhaustive-deps": "warn", // 依存関係のルールを強制
+    "jsx-a11y/anchor-is-valid": "off", // Next.jsの<a>タグに関する特定のルールをオフにする
+    "no-console": "warn", // console.logを警告
+    "no-debugger": "error" // debuggerステートメントを禁止
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // 自動的に使用中のReactのバージョンを検出
+    }
+  }
 }
