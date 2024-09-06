@@ -1,0 +1,22 @@
+@import 'src/app/variables.scss';
+
+.root {
+  height: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid $gray500;
+  min-height: 78px;
+  width: 100%;
+  font-size: 16px;
+  font-family: Arial;
+}
+
+.root::placeholder{
+  color: $gray500;
+}
+
+.root:focus {
+  outline:none;
+  border-color: $success;
+}
+

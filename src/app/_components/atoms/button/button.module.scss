@@ -1,0 +1,67 @@
+@import 'src/app/variables.scss';
+
+.root {
+  height: 48px;
+  border-radius: 24px;
+  padding: 0 24px;
+  font-size: 16px;
+  font-weight: bold;
+  @include respond(tablet-or-pc) {
+    display: inline-block;
+  }
+
+  .content {
+    display: flex;
+    justify-content: flex-end;
+    place-items: center;
+
+    .label {
+      width: 100%;
+    }
+
+    .arrow {
+      display: block;
+    }
+  }
+}
+
+.root:hover {
+  @include respond(pc) {
+    opacity: .6;
+  }
+}
+
+.root:active {
+  opacity:.8;
+}
+.root:disabled,
+.root[disabled]{
+  opacity: .3;
+}
+
+
+.primaryFill {
+  background: var(--primary);
+  color: $white;
+  fill: $white;
+}
+
+.primaryOutline {
+  border: 3px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  fill: var(--primary);
+}
+
+.secondaryFill {
+  background: $secondary;
+  color: $white;
+  fill: $white;
+}
+
+.secondaryOutline {
+  border: 3px solid $secondary;
+  background: transparent;
+  color: $secondary;
+  fill: $secondary;
+}

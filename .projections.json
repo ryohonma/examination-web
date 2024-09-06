@@ -1,0 +1,10 @@
+{
+  "src/**/*.tsx": {
+    "alternate": "src/{}.module.scss",
+    "type": "source"
+  },
+  "src/**/*.module.scss": {
+    "alternate": "src/{}.tsx",
+    "type": "style"
+  }
+}

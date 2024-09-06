@@ -1,0 +1,61 @@
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == pc {
+    @media only screen and (min-width: 768px) {
+      @content;
+    }
+  }
+  @if $breakpoint == sp {
+    @media only screen and (max-width: 767px) {
+      @content;
+    }
+  }
+}
+
+@mixin responsive-classes($base-class) {
+  // 共通のスタイル
+  #{$base-class} {
+    @content;
+  }
+
+  // PC 向けのスタイル
+  #{$base-class}_pc {
+    @include respond(pc) {
+      @content;
+    }
+  }
+
+  // SP 向けのスタイル
+  #{$base-class}_sp {
+    @include respond(sp) {
+      @content;
+    }
+  }
+}
+
+// color
+$primary: #f1b138;
+$secondary: #a0b548;
+$tertiary: #875d3d;
+$text: #333333;
+
+$success: #58b1c6;
+$info: #42526e;
+$danger: #d84e2e;
+$error: #d84e2e;
+$bg-error: #fbedea;
+$warning: #ffec77;
+
+$black: #000000;
+$gray900: #1e1e1d;
+$gray800: #3a3938;
+$gray700: #565453;
+$gray600: #716f6e;
+$gray500: #8d8a89;
+$gray400: #a8a5a4;
+$gray300: #c3c1bf;
+$gray200: #dfdcda;
+$gray100: #f7f6f5;
+$white: #ffffff;
+$disable: #cccccc;
+
