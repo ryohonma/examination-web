@@ -34,7 +34,7 @@ jobs:
           export GOOGLE_APPLICATION_CREDENTIALS="${HOME}/firebase-key.json"
 
       - name: Deploy Firestore Rules
-        run: firebase deploy --only firestore:rules
+        run: firebase deploy --only firestore:rules --project dev-ryohonma
 
       - name: Deploy Firestore Indexes
-        run: firebase deploy --only firestore:indexes
+        run: firebase deploy --only firestore:indexes --project dev-ryohonma
