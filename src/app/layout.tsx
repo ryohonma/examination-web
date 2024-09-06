@@ -1,18 +1,16 @@
 import { AuthUserProvider } from "@luna/context/auth-user-context";
 import { generateMetadata } from "@luna/lib/generate-metadata";
-import localFont from "next/font/local";
+import { M_PLUS_1 } from "next/font/google";
+import { Footer } from "./_components/organisms/footer/footer";
+import { Header } from "./_components/organisms/header/header";
 import { AuthRouteHandler } from "./_components/utils/auth-route-handler";
 import "./globals.scss";
 
-const geistSans = localFont({
-  src: "./src/_assets/fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./src/_assets/fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const mplus1 = M_PLUS_1({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-mplus1",
+  display: "swap",
 });
 
 export const metadata = generateMetadata({
@@ -35,10 +33,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AuthUserProvider>
-          <AuthRouteHandler>{children}</AuthRouteHandler>
-        </AuthUserProvider>
+      <body className={`${mplus1.variable}`}>
+        <Header />
+        <main>
+          <AuthUserProvider>
+            <AuthRouteHandler>{children}</AuthRouteHandler>
+          </AuthUserProvider>
+        </main>
+        <Footer />
       </body>
     </html>
   );

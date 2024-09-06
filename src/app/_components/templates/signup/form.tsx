@@ -1,27 +1,14 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+"use client";
 import { Button } from "../../atoms/button/button";
 import { TextField } from "../../atoms/text-field/text-field";
-import { signupSchema } from "./validation-schema";
+import styles from "./form.module.scss";
+import { useSignup } from "./signup.hooks";
 
-type SignupFormData = z.infer<typeof signupSchema>;
-
-export const SignupForm = ({
-  onSubmit,
-}: {
-  onSubmit: (v: SignupFormData) => void;
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting, isValid },
-  } = useForm<SignupFormData>({
-    resolver: zodResolver(signupSchema),
-  });
+export const SignupForm = () => {
+  const { handleSubmit, register, errors, isSubmitting, isValid } = useSignup();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.root} onSubmit={handleSubmit}>
       <TextField
         title="メールアドレス"
         name="email"
@@ -36,7 +23,12 @@ export const SignupForm = ({
         register={register("password")}
         error={errors.password}
       />
-      <Button loading={isSubmitting} disabled={!isValid} type="submit">
+      <Button
+        loading={isSubmitting}
+        disabled={!isValid}
+        type="submit"
+        showAllow
+      >
         登録
       </Button>
     </form>

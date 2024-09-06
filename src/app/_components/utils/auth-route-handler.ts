@@ -1,8 +1,8 @@
+"use client";
 import { pagesPath } from "@luna/constants/$path";
 import { protectedRoutes } from "@luna/constants/route";
 import { useAuthUser } from "@luna/context/auth-user-context";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export const AuthRouteHandler = ({
@@ -19,7 +19,7 @@ export const AuthRouteHandler = ({
 
     const isProtectedPath = protectedRoutes.includes(pathname);
     if (!authUser && isProtectedPath) {
-      router.push(pagesPath.login.$url());
+      router.push(pagesPath.login.$url().path);
     }
 
     if (authUser && pathname === "/login") {

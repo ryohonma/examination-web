@@ -1,0 +1,169 @@
+@import "src/app/variables.scss";
+
+.openbtn {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  z-index: 100;
+
+  @include respond(sp) {
+    width: 60px;
+    height: 60px;
+  }
+
+  span {
+    display: inline-block;
+    transition: all 0.4s;
+    position: absolute;
+    height: 2px;
+    background-color: #333;
+
+    &:nth-of-type(1) {
+      top: 30px;
+      width: 30px;
+      left: 25px;
+
+      @include respond(sp) {
+        top: 19px;
+        left: 15px;
+      }
+    }
+
+    &:nth-of-type(2) {
+      top: 38px;
+      width: 30px;
+      left: 25px;
+
+      @include respond(sp) {
+        top: 28px;
+        left: 15px;
+      }
+    }
+
+    &:nth-of-type(3) {
+      top: 46px;
+      width: 30px;
+      left: 25px;
+
+      @include respond(sp) {
+        top: 37px;
+        left: 15px;
+      }
+    }
+  }
+
+  &.active span {
+    background-color: #fff;
+
+    &:nth-of-type(1) {
+      top: 30px;
+      transform: translateY(6px) rotate(-45deg);
+      width: 50%;
+
+      @include respond(sp) {
+        top: 25px;
+      }
+    }
+
+    &:nth-of-type(2) {
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    &:nth-of-type(3) {
+      top: 38px;
+      transform: translateY(-2px) rotate(45deg);
+      width: 50%;
+
+      @include respond(sp) {
+        top: 32px;
+      }
+    }
+  }
+}
+
+.sitemap {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 85vw;
+  max-width: 1200px;
+  height: 100vh;
+  padding: 160px 60px;
+  background: rgba(158, 134, 119, 0.9);
+  z-index: 25;
+  max-width: 280px;
+
+  &.active {
+    display: block;
+  }
+
+  @include respond(sp) {
+    padding: 100px 20px 60px;
+    width: 100vw;
+    overflow-y: auto;
+  }
+}
+
+.sitemapContainer {
+  .inner {
+    display: flex;
+    margin: 0 auto;
+
+    @include respond(sp) {
+      display: block;
+      width: 90%;
+    }
+
+    section {
+      margin-right: calc(130 / 1060 * 100%);
+
+      @include respond(sp) {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 30px;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      p.ttl {
+        font-size: min(calc(26 * 100vw / 1060), 26px);
+        margin-bottom: 0;
+        color: #fff;
+        margin-bottom: 30px;
+        font-weight: 400;
+        line-height: 1;
+        @include respond(sp) {
+          font-size: min(calc(36 * 100vw / 767), 36px);
+        }
+      }
+
+      ul {
+        width: 100%;
+
+        li {
+          list-style: none;
+          margin-bottom: 40px;
+
+          p {
+            color: #fff;
+            font-size: min(calc(26 * 100vw / 1060), 26px);
+            margin-bottom: 0;
+            font-weight: normal;
+
+            @include respond(sp) {
+              font-size: min(calc(36 * 100vw / 767), 36px);
+            }
+          }
+        }
+
+      }
+    }
+  }
+}

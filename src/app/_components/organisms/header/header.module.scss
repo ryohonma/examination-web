@@ -1,0 +1,43 @@
+  @import 'src/app/variables.scss';
+
+.header {
+  height: min(calc(80 * 100vw / 1060), 80px);
+
+  @include respond(sp) {
+    height: 95px;
+  }
+
+  &Container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: min(calc(80 * 100vw / 1060), 80px);
+    background: #fff;
+    z-index: 10;
+    padding: 0 min(calc(50 * 100vw / 1060), 50px);
+
+    @include respond(sp) {
+      height: 60px;
+      padding: 10px 20px;
+    }
+  }
+
+  &Logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height:  min(calc(80 * 100vw / 1060), 80px);
+
+    @include respond(sp) {
+      align-items: flex-start;
+      width: fit-content;
+    }
+
+    &Active {
+      @include respond(sp) {
+        display: none;
+      }
+    }
+  }
+}

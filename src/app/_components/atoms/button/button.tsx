@@ -1,5 +1,6 @@
-import IconLoading from "@luna/app/_assets/loading.svg";
+import iconLoading from "@luna/app/_assets/images/iconLoading.svg";
 import { emptyFunction } from "@luna/utils/utils";
+import Image from "next/image";
 import { PropsWithChildren } from "react";
 import styles from "./button.module.scss";
 
@@ -56,7 +57,9 @@ export const Button = ({
     >
       <div className={styles.content}>
         <div className={styles.label}>
-          {loading && <IconLoading />}
+          {loading && (
+            <Image src={iconLoading} alt="loading" width={32} height={32} />
+          )}
           {!loading && children}
         </div>
         {showAllow && (
