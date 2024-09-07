@@ -14,7 +14,7 @@ type Message = BaseMessage & {
 export const useMessages = (initialLimit = 20) => {
   const { authUser } = useAuthUser();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [lastOffset, setLastOffset] = useState<number>(0);
+  const lastOffset = useRef<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
@@ -66,12 +66,16 @@ export const useMessages = (initialLimit = 20) => {
       setMessages((prevMessages) => {
         // ID で重複を防ぐ
         const newMessageIds = new Set(mergedMessages.map((msg) => msg.id));
-        return [
+        const allMessages = [
           ...prevMessages
             .filter((msg) => !removedIds.includes(msg.id))
             .filter((msg) => !newMessageIds.has(msg.id)),
           ...mergedMessages,
         ];
+
+        lastOffset.current = allMessages.length;
+
+        return allMessages;
       });
     }, initialLimit);
 
@@ -85,7 +89,7 @@ export const useMessages = (initialLimit = 20) => {
     setIsLoading(true);
 
     try {
-      const additionalMessages = await list(initialLimit, lastOffset);
+      const additionalMessages = await list(initialLimit, lastOffset.current);
       if (additionalMessages.length === 0) {
         setHasMore(false); // これ以上メッセージがない場合
       } else {
@@ -94,12 +98,14 @@ export const useMessages = (initialLimit = 20) => {
         setMessages((prevMessages) => {
           // ID で重複を防ぐ
           const newMessageIds = new Set(mergedMessages.map((msg) => msg.id));
-          return [
+          const allMessages = [
             ...prevMessages.filter((msg) => !newMessageIds.has(msg.id)),
             ...mergedMessages,
           ];
+          lastOffset.current = allMessages.length;
+
+          return allMessages;
         });
-        setLastOffset(lastOffset + mergedMessages.length);
       }
     } catch (error) {
       console.error("Failed to load more messages: ", error);
