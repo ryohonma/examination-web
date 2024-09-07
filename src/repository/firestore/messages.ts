@@ -1,12 +1,26 @@
-
 import { db } from "@luna/lib/firebase";
-import { addDoc, collection, deleteDoc, doc, getDocs, limit, onSnapshot, orderBy, query, setDoc, startAfter, Timestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+  startAfter,
+  Timestamp,
+} from "firebase/firestore";
 import { Message } from "./model/message";
 
 const messagesCollection = collection(db, "messages");
 
 // 新規メッセージを作成 (POST)
-export const post = async (message: Omit<Message, "id" | "createdAt" | "updatedAt">): Promise<Message> => {
+export const post = async (
+  message: Omit<Message, "id" | "createdAt" | "updatedAt">,
+): Promise<Message> => {
   try {
     const newMessage = {
       ...message,
@@ -25,7 +39,10 @@ export const post = async (message: Omit<Message, "id" | "createdAt" | "updatedA
 };
 
 // メッセージを更新 (PUT)
-export const put = async (messageId: string, message: Omit<Message, "id" | "createdAt" | "updatedAt">): Promise<void> => {
+export const put = async (
+  messageId: string,
+  message: Omit<Message, "id" | "createdAt" | "updatedAt">,
+): Promise<void> => {
   try {
     const messageDocRef = doc(messagesCollection, messageId);
     const updatedMessage = {
@@ -51,12 +68,15 @@ export const remove = async (messageId: string): Promise<void> => {
 };
 
 // メッセージをlimitとoffsetを指定して取得 (LIST)
-export const list = async (limitCount: number, offset: number = 0): Promise<Message[]> => {
+export const list = async (
+  limitCount: number,
+  offset: number = 0,
+): Promise<Message[]> => {
   try {
     const q = query(
       messagesCollection,
       orderBy("createdAt", "desc"),
-      limit(limitCount)
+      limit(limitCount),
     );
 
     const querySnapshot = await getDocs(q);
@@ -68,17 +88,17 @@ export const list = async (limitCount: number, offset: number = 0): Promise<Mess
           messagesCollection,
           orderBy("createdAt", "desc"),
           startAfter(lastVisible),
-          limit(limitCount)
+          limit(limitCount),
         );
         const paginatedSnapshot = await getDocs(paginatedQuery);
-        return paginatedSnapshot.docs.map(doc => ({
+        return paginatedSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         })) as Message[];
       }
     }
 
-    return querySnapshot.docs.map(doc => ({
+    return querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     })) as Message[];
@@ -88,15 +108,18 @@ export const list = async (limitCount: number, offset: number = 0): Promise<Mess
   }
 };
 
-
 // メッセージをリアルタイム更新で取得 (LIST with Snapshots)
 export const listBySnapshot = (
   callback: (messages: Message[]) => void,
   limitCount: number,
-  offset: number = 0
+  offset: number = 0,
 ) => {
   try {
-    const q = query(messagesCollection, orderBy("createdAt", "desc"), limit(limitCount));
+    const q = query(
+      messagesCollection,
+      orderBy("createdAt", "desc"),
+      limit(limitCount),
+    );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const messages: Message[] = [];
@@ -108,7 +131,7 @@ export const listBySnapshot = (
             messagesCollection,
             orderBy("createdAt", "desc"),
             startAfter(lastVisible),
-            limit(limitCount)
+            limit(limitCount),
           );
 
           onSnapshot(paginatedQuery, (paginatedSnapshot) => {

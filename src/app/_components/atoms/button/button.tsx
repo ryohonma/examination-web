@@ -56,9 +56,7 @@ export const Button = ({
     >
       <div className={styles.content}>
         <div className={styles.label}>
-          {loading && (
-            <IconLoading />
-          )}
+          {loading && <IconLoading />}
           {!loading && children}
         </div>
         {showAllow && (

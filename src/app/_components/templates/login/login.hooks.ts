@@ -17,7 +17,7 @@ export const useLogin = () => {
   const { alert } = useDialog();
 
   const submit = async ({ email, password }: z.infer<typeof loginSchema>) => {
-    const result = await login(email, password)
+    const result = await login(email, password);
     if (result) {
       alert({ title: "エラー", body: result });
     }

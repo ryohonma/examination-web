@@ -27,25 +27,47 @@ export function Menu() {
 
   return (
     <>
-      <div
+      <button
         className={`${styles.openbtn} ${isOpen ? styles.active : ""}`}
         onClick={toggleMenu}
       >
-        { /* cssでハンバーガーメニューのアイコンを実装 */}
+        {/* cssでハンバーガーメニューのアイコンを実装 */}
         <span></span>
         <span></span>
         <span></span>
-      </div>
+      </button>
       <article className={`${styles.sitemap} ${isOpen ? styles.active : ""}`}>
         <div className={styles.sitemapContainer}>
           <div className={styles.inner}>
             <section>
-              <ul> <li> <Link href={pagesPath.profile.$url().pathname}>プロフィール</Link> </li> </ul>
-              {account &&
-                <ul> <li> <Link href={pagesPath.timelines.$url().pathname}>投稿一覧</Link> </li> </ul>
-              }
+              <ul>
+                {" "}
+                <li>
+                  {" "}
+                  <Link href={pagesPath.profile.$url().pathname}>
+                    プロフィール
+                  </Link>{" "}
+                </li>{" "}
+              </ul>
+              {account && (
+                <ul>
+                  {" "}
+                  <li>
+                    {" "}
+                    <Link href={pagesPath.timelines.$url().pathname}>
+                      投稿一覧
+                    </Link>{" "}
+                  </li>{" "}
+                </ul>
+              )}
 
-              <ul> <li> <button onClick={() => signOut()}>ログアウト</button> </li> </ul>
+              <ul>
+                {" "}
+                <li>
+                  {" "}
+                  <button onClick={() => signOut()}>ログアウト</button>{" "}
+                </li>{" "}
+              </ul>
             </section>
           </div>
         </div>

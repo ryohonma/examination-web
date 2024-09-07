@@ -10,14 +10,22 @@ import { z } from "zod";
 import styles from "./message-post.module.scss";
 
 const postSchema = z.object({
-  text: z.string().min(1, "テキストを入力してください").max(140, "140文字以内で入力してください"),
+  text: z
+    .string()
+    .min(1, "テキストを入力してください")
+    .max(140, "140文字以内で入力してください"),
 });
 
 export const MessagePostComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { authUser } = useAuthUser();
 
-  const { watch, control, handleSubmit, formState: { errors } } = useForm({
+  const {
+    watch,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(postSchema),
     defaultValues: { text: "" },
   });
@@ -35,14 +43,16 @@ export const MessagePostComponent = () => {
   return (
     <>
       {/* 常時表示のボタン */}
-      <div className={styles.postButton} onClick={() => setIsOpen(true)}>
+      <button className={styles.postButton} onClick={() => setIsOpen(true)}>
         <div className={styles.plusIcon} />
-      </div>
+      </button>
 
       {/* スライドインの投稿コンポーネント */}
       <div className={`${styles.drawer} ${isOpen ? styles.open : ""}`}>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <h4>テキスト <span className={styles.required}>必須</span></h4>
+          <h4>
+            テキスト <span className={styles.required}>必須</span>
+          </h4>
           <Controller
             name="text"
             control={control}
@@ -50,23 +60,35 @@ export const MessagePostComponent = () => {
               <div>
                 <Textarea
                   {...field}
-                  name='text'
-                  register={control.register(field.name, { required: "テキストを入力してください" })}
+                  name="text"
+                  register={control.register(field.name, {
+                    required: "テキストを入力してください",
+                  })}
                   placeholder="テキストを入力してください"
                   maxLength={400}
                 />
 
                 <div className={styles.horizontal}>
-                  <span className={styles.error}>{errors.text?.message?.toString()}</span>
-                  <span className={`${styles.textCounter} ${watch('text').length > 140 ? styles.error : ''}`}>
-                    {`${watch('text').length} / 140`}</span>
+                  <span className={styles.error}>
+                    {errors.text?.message?.toString()}
+                  </span>
+                  <span
+                    className={`${styles.textCounter} ${watch("text").length > 140 ? styles.error : ""}`}
+                  >
+                    {`${watch("text").length} / 140`}
+                  </span>
                 </div>
               </div>
             )}
           />
 
           <div className={styles.actions}>
-            <Button type="button" shape="outline" className={styles.cancelButton} onClick={() => setIsOpen(false)}>
+            <Button
+              type="button"
+              shape="outline"
+              className={styles.cancelButton}
+              onClick={() => setIsOpen(false)}
+            >
               キャンセル
             </Button>
 

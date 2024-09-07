@@ -22,35 +22,42 @@ export const useMessages = (initialLimit = 20) => {
   const fetchedAccountsRef = useRef<Map<string, Account>>(new Map());
 
   // メッセージにアカウント情報をマージする関数
-  const mergeAccountsIntoMessages = async (rawMessages: BaseMessage[]): Promise<Message[]> => {
-    // 取得済みのアカウントUIDはRefから取得
-    const existingAccounts = fetchedAccountsRef.current;
+  const mergeAccountsIntoMessages = useCallback(
+    async (rawMessages: BaseMessage[]): Promise<Message[]> => {
+      // 取得済みのアカウントUIDはRefから取得
+      const existingAccounts = fetchedAccountsRef.current;
 
-    // 新しく取得すべきUIDを抽出
-    const uidsToFetch = Array.from(new Set(rawMessages.map((msg) => msg.uid)))
-      .filter(uid => !existingAccounts.has(uid));
+      // 新しく取得すべきUIDを抽出
+      const uidsToFetch = Array.from(
+        new Set(rawMessages.map((msg) => msg.uid)),
+      ).filter((uid) => !existingAccounts.has(uid));
 
-    // 新しく必要なアカウントを取得
-    let newAccounts: Account[] = [];
-    if (uidsToFetch.length > 0) {
-      newAccounts = await listByUIDs(uidsToFetch);
-      // 新しいアカウントをRefに保存
-      newAccounts.forEach((account) => {
-        existingAccounts.set(account.uid, account);
+      // 新しく必要なアカウントを取得
+      let newAccounts: Account[] = [];
+      if (uidsToFetch.length > 0) {
+        newAccounts = await listByUIDs(uidsToFetch);
+        // 新しいアカウントをRefに保存
+        newAccounts.forEach((account) => {
+          existingAccounts.set(account.uid, account);
+        });
+      }
+
+      // メッセージにアカウント情報をマージ
+      return rawMessages.map((msg) => {
+        const account = existingAccounts.get(msg.uid) || {
+          name: "Unknown",
+          icon: "",
+        };
+        return {
+          ...msg,
+          userName: account.name,
+          userIcon: account.icon,
+          isMyMessage: authUser?.uid === msg.uid,
+        };
       });
-    }
-
-    // メッセージにアカウント情報をマージ
-    return rawMessages.map((msg) => {
-      const account = existingAccounts.get(msg.uid) || { name: "Unknown", icon: "" };
-      return {
-        ...msg,
-        userName: account.name,
-        userIcon: account.icon,
-        isMyMessage: authUser?.uid === msg.uid,
-      };
-    });
-  };
+    },
+    [authUser],
+  );
 
   // リアルタイムで最新メッセージを取得 (listBySnapshot を利用)
   useEffect(() => {
@@ -67,7 +74,7 @@ export const useMessages = (initialLimit = 20) => {
     }, initialLimit);
 
     return () => unsubscribe();
-  }, [initialLimit, authUser]);
+  }, [initialLimit, authUser, mergeAccountsIntoMessages]);
 
   // スクロールで過去のメッセージを追加読み込み (list を利用)
   const loadMoreMessages = useCallback(async () => {
@@ -80,7 +87,8 @@ export const useMessages = (initialLimit = 20) => {
       if (additionalMessages.length === 0) {
         setHasMore(false); // これ以上メッセージがない場合
       } else {
-        const mergedMessages = await mergeAccountsIntoMessages(additionalMessages);
+        const mergedMessages =
+          await mergeAccountsIntoMessages(additionalMessages);
         setMessages((prevMessages) => {
           // ID で重複を防ぐ
           const newMessageIds = new Set(mergedMessages.map((msg) => msg.id));
@@ -96,7 +104,7 @@ export const useMessages = (initialLimit = 20) => {
     }
 
     setIsLoading(false);
-  }, [isLoading, hasMore, initialLimit, lastOffset, authUser]);
+  }, [isLoading, hasMore, initialLimit, lastOffset, mergeAccountsIntoMessages]);
 
   return {
     messages,

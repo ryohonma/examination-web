@@ -5,11 +5,7 @@ import { useAccount } from "@luna/context/account/account";
 import { useAuthUser } from "@luna/context/auth-user/auth-user";
 import { usePathname, useRouter } from "next/navigation";
 
-export const RouteHandler = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const RouteHandler = ({ children }: { children: React.ReactNode }) => {
   const { authUser, loading } = useAuthUser();
   const { account, loading: loadingAccount } = useAccount();
   const pathname = usePathname();
@@ -28,13 +24,22 @@ export const RouteHandler = ({
   }
 
   // 認証済みのユーザーがログインまたはサインアップページにアクセスした場合、プロファイルページへリダイレクト
-  if (authUser && (pathname === pagesPath.login.$url().path || pathname === pagesPath.signup.$url().path)) {
+  if (
+    authUser &&
+    (pathname === pagesPath.login.$url().path ||
+      pathname === pagesPath.signup.$url().path)
+  ) {
     router.replace(pagesPath.profile.$url().path);
     return null;
   }
 
   // ユーザーが登録を完了していない場合、プロフィールページへリダイレクト
-  if (authUser && !loadingAccount && !account && pathname !== pagesPath.profile.$url().path) {
+  if (
+    authUser &&
+    !loadingAccount &&
+    !account &&
+    pathname !== pagesPath.profile.$url().path
+  ) {
     router.replace(pagesPath.profile.$url().path);
     return null;
   }

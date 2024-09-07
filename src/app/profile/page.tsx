@@ -7,6 +7,5 @@ export default function Profile() {
     <Card className={styles.page}>
       <ProfileRegistrationForm />
     </Card>
-
   );
 }

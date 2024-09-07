@@ -32,7 +32,7 @@
     "react-hooks/rules-of-hooks": "error", // React Hooksのルールを強制
     "react-hooks/exhaustive-deps": "warn", // 依存関係のルールを強制
     "jsx-a11y/anchor-is-valid": "off", // Next.jsの<a>タグに関する特定のルールをオフにする
-    "no-console": "warn", // console.logを警告
+    // "no-console": "warn", // console.logを警告
     "no-debugger": "error" // debuggerステートメントを禁止
   },
   "settings": {

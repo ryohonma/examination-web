@@ -1,17 +1,20 @@
 import { FirebaseError } from "firebase/app";
-import { AuthErrorCodes, createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from "firebase/auth";
+import {
+  AuthErrorCodes,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  User,
+} from "firebase/auth";
 import { auth } from "./firebase";
 
 export const signOut = async (): Promise<void> => {
   await auth.signOut();
 };
 
-
 export const login = async (
   email: string,
   password: string,
 ): Promise<string> => {
-
   try {
     await signInWithEmailAndPassword(auth, email, password);
 
@@ -36,7 +39,6 @@ export const createUser = async (
   email: string,
   password: string,
 ): Promise<CreateUserResult> => {
-
   try {
     const c = await createUserWithEmailAndPassword(auth, email, password);
     if (!c.user?.uid) {

@@ -1,4 +1,5 @@
-import styles from './message-item.module.scss';
+import Image from "next/image";
+import styles from "./message-item.module.scss";
 
 type MessageProps = {
   userName: string;
@@ -7,11 +8,22 @@ type MessageProps = {
   content: string;
 };
 
-export const MessageItem = ({ userName, userIcon, createdAt, content }: MessageProps) => {
+export const MessageItem = ({
+  userName,
+  userIcon,
+  createdAt,
+  content,
+}: MessageProps) => {
   return (
     <div className={styles.messageItem}>
       <div className={styles.header}>
-        <img src={userIcon} alt={`${userName}のアイコン`} className={styles.userIcon} />
+        <Image
+          width={40}
+          height={40}
+          src={userIcon}
+          alt={`${userName}のアイコン`}
+          className={styles.userIcon}
+        />
         <div>
           <span className={styles.userName}>{userName}</span>
           <span className={styles.createdAt}>{createdAt}</span>

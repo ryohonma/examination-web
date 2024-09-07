@@ -3,7 +3,7 @@ import { pagesPath } from "@luna/constants/$path";
 import { useAccount } from "@luna/context/account/account";
 import { useAuthUser } from "@luna/context/auth-user/auth-user";
 import { useDialog } from "@luna/context/dialog/dialog";
-import { post, put } from '@luna/repository/firestore/account';
+import { post, put } from "@luna/repository/firestore/account";
 import { upload } from "@luna/repository/storage/upload";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,7 +24,7 @@ export const useProfileRegister = () => {
     resolver: zodResolver(profileSchema),
   });
 
-  const { replace, push: navigate } = useRouter();
+  const { push: navigate } = useRouter();
   const { authUser } = useAuthUser();
   const { alert } = useDialog();
   const { account, setAccount } = useAccount();
@@ -43,18 +43,17 @@ export const useProfileRegister = () => {
     }
   }, [account, reset]);
 
-
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
 
     if (file) {
       // ファイルサイズのチェック
       if (file.size > MAX_FILE_SIZE) {
         setError("profileIcon", {
           type: "manual",
-          message: "ファイルサイズが大きすぎます。5MB以下のファイルを選択してください。",
+          message:
+            "ファイルサイズが大きすぎます。5MB以下のファイルを選択してください。",
         });
         setImagePreview(null); // 画像プレビューをクリア
         return;
@@ -90,8 +89,8 @@ export const useProfileRegister = () => {
         // Firebase Storageにファイルをアップロード
         const path = `avatars/${authUser.uid}/${file.name}`;
         iconURL = await upload(path, file); // アップロード後、ダウンロードURLを取得
-
       } catch (error) {
+        console.error(error);
         alert({
           title: "プロフィール登録失敗",
           body: "プロフィールアイコンのアップロードに失敗しました。",
@@ -107,7 +106,7 @@ export const useProfileRegister = () => {
         name,
         icon: iconURL,
         uid: authUser.uid,
-      }
+      };
       if (account) {
         await put(account.id, payload);
         setAccount({
@@ -119,8 +118,8 @@ export const useProfileRegister = () => {
         setAccount(newAcc);
       }
       navigate(pagesPath.timelines.$url().path);
-
     } catch (error) {
+      console.error(error);
       alert({
         title: "プロフィール登録失敗",
         body: "プロフィールの登録に失敗しました。",

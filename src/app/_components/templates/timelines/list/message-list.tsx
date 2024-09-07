@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingIcon from "@luna/app/_assets/images/icon-loading.svg";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { MessageItem } from "./message-item";
 import { useMessages } from "./message-list.hooks";
 
@@ -9,7 +9,7 @@ export const MessageListComponent = () => {
   const { messages, loadMoreMessages, hasMore, isLoading } = useMessages(20);
 
   // スクロール位置が一番下になったら、loadMoreMessagesを呼び出す
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     const scrollTop = document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
     const fullHeight = document.documentElement.offsetHeight;
@@ -17,7 +17,7 @@ export const MessageListComponent = () => {
     if (scrollTop + windowHeight >= fullHeight - 100 && !isLoading && hasMore) {
       loadMoreMessages();
     }
-  };
+  }, [isLoading, hasMore, loadMoreMessages]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -38,7 +38,11 @@ export const MessageListComponent = () => {
         />
       ))}
 
-      {isLoading && <div><LoadingIcon /></div>}
+      {isLoading && (
+        <div>
+          <LoadingIcon />
+        </div>
+      )}
     </div>
   );
 };

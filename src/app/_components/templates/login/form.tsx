@@ -35,6 +35,6 @@ export const LoginForm = () => {
       </Button>
 
       <Link href={pagesPath.signup.$url()}>新規登録はこちら</Link>
-    </form >
+    </form>
   );
 };

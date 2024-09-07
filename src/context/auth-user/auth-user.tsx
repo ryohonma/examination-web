@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { auth } from "@luna/lib/firebase";
 import { emptyFunction } from "@luna/utils/utils";
 import { User, onAuthStateChanged } from "firebase/auth";

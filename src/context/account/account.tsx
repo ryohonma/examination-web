@@ -1,7 +1,13 @@
-'use client'
+"use client";
 import { Account } from "@luna//repository/firestore//model/account";
 import { getByUID } from "@luna/repository/firestore/account";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useAuthUser } from "../auth-user/auth-user";
 
 type AccountContextType = {
@@ -11,17 +17,20 @@ type AccountContextType = {
   loading: boolean;
 };
 
-
 const defaultAccountContext: AccountContextType = {
   account: null,
-  setAccount: () => { },
-  loadAccount: async () => { },
+  setAccount: () => {},
+  loadAccount: async () => {},
   loading: true,
 };
 
 const AccountContext = createContext<AccountContextType>(defaultAccountContext);
 
-export const AccountProvider = ({ children }: { children: React.ReactNode }) => {
+export const AccountProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { authUser } = useAuthUser();
   const [account, setAccountState] = useState<Account | null>(null);
   const [loading, setLoading] = useState(true);
@@ -30,17 +39,20 @@ export const AccountProvider = ({ children }: { children: React.ReactNode }) => 
     setAccountState(newAccount);
   }, []);
 
-  const loadAccount = useCallback(async (uid: string) => {
-    try {
-      const loadedAccount = await getByUID(uid);
-      if (loadedAccount) {
-        setAccount(loadedAccount);
+  const loadAccount = useCallback(
+    async (uid: string) => {
+      try {
+        const loadedAccount = await getByUID(uid);
+        if (loadedAccount) {
+          setAccount(loadedAccount);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Accountのロード中にエラーが発生しました", error);
       }
-      setLoading(false);
-    } catch (error) {
-      console.error("Accountのロード中にエラーが発生しました", error);
-    }
-  }, [setAccount]);
+    },
+    [setAccount],
+  );
 
   useEffect(() => {
     if (authUser) {

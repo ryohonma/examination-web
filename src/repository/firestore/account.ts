@@ -1,13 +1,23 @@
-
 import { db } from "@luna/lib/firebase";
-import { addDoc, collection, doc, getDocs, query, setDoc, Timestamp, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  Timestamp,
+  where,
+} from "firebase/firestore";
 import { Account } from "./model/account";
 
 // コレクションの参照
 const accountsCollection = collection(db, "accounts");
 
 // 新規アカウントを作成 (POST)
-export const post = async (account: Omit<Account, "id" | "createdAt" | "updatedAt">): Promise<Account> => {
+export const post = async (
+  account: Omit<Account, "id" | "createdAt" | "updatedAt">,
+): Promise<Account> => {
   try {
     const newAccount = {
       ...account,
@@ -17,8 +27,8 @@ export const post = async (account: Omit<Account, "id" | "createdAt" | "updatedA
     const docRef = await addDoc(accountsCollection, newAccount);
     return {
       id: docRef.id,
-      ...newAccount
-    }
+      ...newAccount,
+    };
   } catch (error) {
     console.error(error);
     throw new Error("Failed to create account:" + error);
@@ -26,7 +36,10 @@ export const post = async (account: Omit<Account, "id" | "createdAt" | "updatedA
 };
 
 // アカウントを更新 (PUT)
-export const put = async (accountId: string, account: Omit<Account, "id" | "createdAt" | "updatedAt">): Promise<void> => {
+export const put = async (
+  accountId: string,
+  account: Omit<Account, "id" | "createdAt" | "updatedAt">,
+): Promise<void> => {
   try {
     const accountDocRef = doc(accountsCollection, accountId);
     const updatedAccount = {

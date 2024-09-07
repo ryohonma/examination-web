@@ -7,7 +7,10 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
  * @param file - アップロードするファイルオブジェクト (Blob, File)
  * @returns Promise<string> - アップロードされたファイルのダウンロードURL
  */
-export const upload = async (path: string, file: Blob | File): Promise<string> => {
+export const upload = async (
+  path: string,
+  file: Blob | File,
+): Promise<string> => {
   try {
     // ストレージリファレンスを作成
     const storageRef = ref(storage, path);

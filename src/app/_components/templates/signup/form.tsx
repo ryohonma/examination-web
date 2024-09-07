@@ -40,12 +40,20 @@ export const SignupForm = () => {
           <span>
             <a
               target="_blank"
-              href='https://luna-matching.notion.site/a714620bbd8740d1ac98f2326fbd0bbc?pvs=25'>利用規約</a>に同意します</span>
+              href="https://luna-matching.notion.site/a714620bbd8740d1ac98f2326fbd0bbc?pvs=25"
+              rel="noreferrer"
+            >
+              利用規約
+            </a>
+            に同意します
+          </span>
         </label>
-        {errors.terms && <span className={styles.error}>{errors.terms.message}</span>}
+        {errors.terms && (
+          <span className={styles.error}>{errors.terms.message}</span>
+        )}
       </div>
 
       <Link href={pagesPath.login.$url()}>すでにアカウントをお持ちの方</Link>
-    </form >
+    </form>
   );
 };
