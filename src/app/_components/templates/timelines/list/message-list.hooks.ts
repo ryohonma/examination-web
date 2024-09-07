@@ -61,13 +61,15 @@ export const useMessages = (initialLimit = 20) => {
 
   // リアルタイムで最新メッセージを取得 (listBySnapshot を利用)
   useEffect(() => {
-    const unsubscribe = listBySnapshot(async (newMessages) => {
+    const unsubscribe = listBySnapshot(async (newMessages, removedIds) => {
       const mergedMessages = await mergeAccountsIntoMessages(newMessages);
       setMessages((prevMessages) => {
         // ID で重複を防ぐ
         const newMessageIds = new Set(mergedMessages.map((msg) => msg.id));
         return [
-          ...prevMessages.filter((msg) => !newMessageIds.has(msg.id)),
+          ...prevMessages
+            .filter((msg) => !removedIds.includes(msg.id))
+            .filter((msg) => !newMessageIds.has(msg.id)),
           ...mergedMessages,
         ];
       });

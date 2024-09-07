@@ -31,10 +31,12 @@ export const MessageListComponent = () => {
       {messages.map((message) => (
         <MessageItem
           key={message.id}
+          id={message.id}
           userName={message.userName}
           userIcon={message.userIcon}
           createdAt={message.createdAt.toDate().toLocaleString()}
           content={message.content}
+          canDelete={message.isMyMessage}
         />
       ))}
 

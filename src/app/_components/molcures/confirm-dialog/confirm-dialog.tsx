@@ -26,7 +26,9 @@ export function ConfirmDialog({
       actions={
         <>
           {cancelLabel && (
-            <Button onClick={() => onClose("cancel")}>{cancelLabel}</Button>
+            <Button shape="outline" onClick={() => onClose("cancel")}>
+              {cancelLabel}
+            </Button>
           )}
           {submitLabel && (
             <Button onClick={() => onClose("ok")}>{submitLabel}</Button>

@@ -1,8 +1,11 @@
+import { useDialog } from "@luna/context/dialog/dialog";
+import { remove } from "@luna/repository/firestore/messages";
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "./message-item.module.scss";
 
 type MessageProps = {
+  id: string;
   userName: string;
   userIcon: string;
   createdAt: string;
@@ -11,6 +14,7 @@ type MessageProps = {
 };
 
 export const MessageItem = ({
+  id,
   userName,
   userIcon,
   createdAt,
@@ -18,17 +22,43 @@ export const MessageItem = ({
   canDelete,
 }: MessageProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+  const { confirm, alert } = useDialog();
 
   // 投稿削除の処理
   const handleDelete = async () => {
+    const res = await confirm({ body: "このメッセージを削除しますか？" });
+    if (res !== "ok") {
+      return;
+    }
+
     try {
-      //  await deleteMessage(messageId);
-      alert("投稿を削除しました。");
+      await remove(id);
     } catch (error) {
       console.error("メッセージの削除に失敗しました:", error);
-      alert("メッセージの削除に失敗しました。");
+      alert({ body: "メッセージの削除に失敗しました。" });
     }
   };
+
+  // ポップオーバーを閉じる処理
+  const closePopover = useCallback(
+    () => setIsPopoverOpen(false),
+    [setIsPopoverOpen],
+  );
+
+  useEffect(() => {
+    if (!isPopoverOpen) {
+      window.removeEventListener("click", closePopover);
+      return;
+    }
+
+    setTimeout(() => {
+      window.addEventListener("click", closePopover);
+    }, 100);
+
+    return () => {
+      window.removeEventListener("click", closePopover);
+    };
+  }, [isPopoverOpen, closePopover]);
 
   return (
     <div className={styles.messageItem}>

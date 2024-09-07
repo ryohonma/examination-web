@@ -1,4 +1,3 @@
-
 @mixin respond($breakpoint) {
   @if $breakpoint == pc {
     @media only screen and (min-width: 768px) {
@@ -35,7 +34,7 @@
 
 // color
 $primary: #b3790d;
-$secondary: #a0b548;
+$secondary: #fcd1a9;
 $tertiary: rgba(158, 134, 119, 0.9);
 $text: #333333;
 
@@ -58,4 +57,3 @@ $gray200: #dfdcda;
 $gray100: #f7f6f5;
 $white: #ffffff;
 $disable: #cccccc;
-

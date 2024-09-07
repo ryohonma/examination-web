@@ -110,7 +110,7 @@ export const list = async (
 
 // メッセージをリアルタイム更新で取得 (LIST with Snapshots)
 export const listBySnapshot = (
-  callback: (messages: Message[]) => void,
+  callback: (messages: Message[], removedIds: string[]) => void,
   limitCount: number,
   offset: number = 0,
 ) => {
@@ -121,11 +121,15 @@ export const listBySnapshot = (
       limit(limitCount),
     );
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const unsubscribe = onSnapshot(q, (snap) => {
       const messages: Message[] = [];
+      const changes = snap.docChanges();
+      const removedIds = changes
+        .filter((change) => change.type === "removed")
+        .map((change) => change.doc.id);
 
       if (offset > 0) {
-        const lastVisible = querySnapshot.docs[offset - 1];
+        const lastVisible = snap.docs[offset - 1];
         if (lastVisible) {
           const paginatedQuery = query(
             messagesCollection,
@@ -141,17 +145,17 @@ export const listBySnapshot = (
                 ...doc.data(),
               } as Message);
             });
-            callback(messages);
+            callback(messages, removedIds);
           });
         }
       } else {
-        querySnapshot.forEach((doc) => {
+        snap.forEach((doc) => {
           messages.push({
             id: doc.id,
             ...doc.data(),
           } as Message);
         });
-        callback(messages);
+        callback(messages, removedIds);
       }
     });
 

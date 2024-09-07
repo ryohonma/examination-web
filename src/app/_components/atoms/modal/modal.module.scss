@@ -68,8 +68,11 @@
 
     button {
       margin-left: 10px;
-      min-width: 100px;
+      min-width: 120px;
+
+      &:last-child {
+        margin-left: auto;
+      }
     }
   }
-
 }
