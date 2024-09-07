@@ -9,7 +9,7 @@ export const profileSchema = z.object({
       "プロフィールアイコンを選択してください",
     )
     .refine(
-      (files) => typeof files === "string" || files[0] instanceof File,
+      (files) => typeof files === "string" || files?.[0] instanceof File,
       "プロフィールアイコンが正しくありません",
     ),
 
