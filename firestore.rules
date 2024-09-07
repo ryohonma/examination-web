@@ -3,13 +3,25 @@ service cloud.firestore {
   match /databases/{database}/documents {
     
     match /accounts/{accountId} {
-      allow read: if true;
-      allow create, update, delete: if request.auth != null && request.auth.uid == resource.data.uid;
+      // 認証されたユーザーのみが読み取れるようにする
+      allow read: if request.auth != null;
+      
+      // 新規作成時のチェックを request.resource.data で行う
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.uid;
+      
+      // 既存のデータに対する操作は resource.data を使用
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.uid;
     }
 
     match /messages/{messageId} {
-      allow read: if true;
-      allow create, update, delete: if request.auth != null && request.auth.uid == resource.data.uid;
+      // 認証されたユーザーのみが読み取れるようにする
+      allow read: if request.auth != null;
+      
+      // 新規作成時のチェックを request.resource.data で行う
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.uid;
+      
+      // 既存のデータに対する操作は resource.data を使用
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.uid;
     }
   }
 }

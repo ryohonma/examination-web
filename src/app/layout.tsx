@@ -1,8 +1,10 @@
-import { AuthUserProvider } from "@luna/context/auth-user-context";
+import { AuthUserProvider } from "@luna/context/auth-user/auth-user";
+import { DialogProvider } from "@luna/context/dialog/dialog";
 import { generateMetadata } from "@luna/lib/generate-metadata";
 import { M_PLUS_1 } from "next/font/google";
 import { Footer } from "./_components/organisms/footer/footer";
 import { Header } from "./_components/organisms/header/header";
+import { Menu } from "./_components/organisms/menu/menu";
 import { AuthRouteHandler } from "./_components/utils/auth-route-handler";
 import "./globals.scss";
 
@@ -36,9 +38,14 @@ export default function RootLayout({
       <body className={`${mplus1.variable}`}>
         <Header />
         <main>
-          <AuthUserProvider>
-            <AuthRouteHandler>{children}</AuthRouteHandler>
-          </AuthUserProvider>
+          <DialogProvider>
+            <AuthUserProvider>
+              <AuthRouteHandler>
+                <Menu />
+                {children}
+              </AuthRouteHandler>
+            </AuthUserProvider>
+          </DialogProvider>
         </main>
         <Footer />
       </body>

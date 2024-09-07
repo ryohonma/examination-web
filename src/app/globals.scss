@@ -16,7 +16,8 @@ body {
 }
 
 a {
-  color: inherit;
+  color: $primary;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -31,4 +32,9 @@ main {
   max-width: 1060px;
   margin:  0 auto;
   min-height: calc(100vh - 86px);
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 700;
 }

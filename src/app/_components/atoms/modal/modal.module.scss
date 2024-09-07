@@ -1,0 +1,75 @@
+@import "src/app/variables.scss";
+
+.root {
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.maskContainer {
+  display: contents;
+  cursor: default;
+
+  .mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+  }
+}
+
+.container {
+  min-width: 335px;
+  background-color: $white;
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 90vh;
+  z-index: 1002;
+  position: relative;
+  padding: 12px 20px;
+
+  @include respond(pc) {
+    min-width: 520px;
+  }
+
+  .close {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    line-height: 0;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+  }
+
+  .contents {
+    h4 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+
+    button {
+      margin-left: 10px;
+      min-width: 100px;
+    }
+  }
+
+}

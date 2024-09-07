@@ -5,7 +5,7 @@ interface Props {
   className?: string;
   title?: string;
   name?: string;
-  type?: "text" | "password" | "number" | "tel" | "email";
+  type?: "text" | "password" | "number" | "tel" | "email" | "date";
   placeholder?: string;
   maxLength?: number;
   register?: UseFormRegisterReturn;
@@ -27,7 +27,6 @@ export const TextField = ({
       {title && <label className={styles.title}>{title}</label>}
       <input
         maxLength={maxLength}
-        className={`${className}`}
         type={type}
         name={name}
         placeholder={placeholder}

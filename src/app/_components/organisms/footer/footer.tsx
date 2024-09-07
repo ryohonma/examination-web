@@ -9,8 +9,10 @@ export function Footer() {
         </div>
       </footer>
 
-      {/* Page Top Button */}
+      {/* Page Top Button 
+       * 投稿ボタンと被るので一旦廃止
       <button className={styles.pageTop}></button>
+      */}
     </>
   );
 }

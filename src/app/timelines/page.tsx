@@ -1,11 +1,9 @@
 import { Card } from "../_components/atoms/card/card";
-import { LoginForm } from "../_components/templates/login/form";
 import styles from "./page.module.scss";
 
-export default function Login() {
+export default function Timelines() {
   return (
     <Card className={styles.page}>
-      <LoginForm />
     </Card>
   );
 }

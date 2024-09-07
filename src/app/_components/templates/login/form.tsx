@@ -1,27 +1,16 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+"use client";
+import { pagesPath } from "@luna/constants/$path";
+import Link from "next/link";
 import { Button } from "../../atoms/button/button";
 import { TextField } from "../../atoms/text-field/text-field";
-import { loginSchema } from "./validation-schema";
+import styles from "./form.module.scss";
+import { useLogin } from "./login.hooks";
 
-type LoginFormData = z.infer<typeof loginSchema>;
-
-export const LoginForm = ({
-  onSubmit,
-}: {
-  onSubmit: (v: LoginFormData) => void;
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting, isValid },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-  });
+export const LoginForm = () => {
+  const { handleSubmit, register, errors, isSubmitting, isValid } = useLogin();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.root} onSubmit={handleSubmit}>
       <TextField
         title="メールアドレス"
         name="email"
@@ -36,9 +25,16 @@ export const LoginForm = ({
         register={register("password")}
         error={errors.password}
       />
-      <Button loading={isSubmitting} disabled={!isValid} type="submit">
-        登録
+      <Button
+        loading={isSubmitting}
+        disabled={!isValid}
+        type="submit"
+        showAllow
+      >
+        ログイン
       </Button>
-    </form>
+
+      <Link href={pagesPath.signup.$url()}>新規登録はこちら</Link>
+    </form >
   );
 };

@@ -2,7 +2,7 @@
 
 .footerContainer {
   padding-bottom: min(calc(100 * 100vw / 1060), 100px);
-  background: #efeae4;
+  background: $gray200;
   width: 100%;
   bottom: 0;
 
@@ -12,7 +12,6 @@
 
   .rfsContentArea {
     padding-top: min(calc(80 * 100vw / 1060), 80px);
-    border-top: 1px solid #999999;
     max-width: 880px;
     margin: 0 auto;
     width: calc(100% - 60px);
@@ -62,63 +61,3 @@
     }
   }
 }
-
-
-.pageTop {
-  position: fixed;
-  bottom: min(calc(30 * 100vw / 1060), 30px);
-  right: min(calc(30 * 100vw / 1060), 30px);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  z-index: 100;
-  cursor: pointer;
-  border: 0;
-  outline: 0;
-  padding: 0;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-color: #fff;
-  border: 1px solid #b3790d;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-transition: all .3s ease;
-  transition: all .3s ease
-}
-@media screen and (max-width:767px) {
-  .pageTop {
-      right: 15px;
-      bottom: 15px
-  }
-}
-.pageTop:before {
-  content: "";
-  width: 9pt;
-  height: 9pt;
-  margin-bottom: -6px;
-  border-top: solid 2px #b3790d;
-  border-right: solid 2px #b3790d;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-
-  content: "";
-	width: 12px;
-	height: 12px;
-	margin-bottom: -6px;
-	border-top: solid 2px #b3790d;
-	border-right: solid 2px #b3790d;
-	transform: rotate(-45deg);
-}
-.pageTop:hover {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1)
-}
-

@@ -1,9 +1,8 @@
 "use client";
 import { pagesPath } from "@luna/constants/$path";
 import { protectedRoutes } from "@luna/constants/route";
-import { useAuthUser } from "@luna/context/auth-user-context";
+import { useAuthUser } from "@luna/context/auth-user/auth-user";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export const AuthRouteHandler = ({
   children,
@@ -14,20 +13,21 @@ export const AuthRouteHandler = ({
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(() => {
-    if (loading) return;
-
-    const isProtectedPath = protectedRoutes.includes(pathname);
-    if (!authUser && isProtectedPath) {
-      router.push(pagesPath.login.$url().path);
-    }
-
-    if (authUser && pathname === "/login") {
-      router.push("");
-    }
-  }, [authUser, loading, router, pathname]);
-
   if (loading) {
+    return null;
+  }
+
+  const isProtectedPath = protectedRoutes.includes(pathname);
+
+  // 認証されていない場合、保護されたルートへのアクセスを制限しログインページへリダイレクト
+  if (!authUser && isProtectedPath) {
+    router.replace(pagesPath.login.$url().path);
+    return null;
+  }
+
+  // 認証済みのユーザーがログインまたはサインアップページにアクセスした場合、プロファイルページへリダイレクト
+  if (authUser && (pathname === pagesPath.login.$url().path || pathname === pagesPath.signup.$url().path)) {
+    router.replace(pagesPath.profile.$url().path);
     return null;
   }
 

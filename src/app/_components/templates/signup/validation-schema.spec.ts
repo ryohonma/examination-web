@@ -5,6 +5,7 @@ describe("signupSchema", () => {
     const validData = {
       email: "test@example.com",
       password: "password123",
+      terms: true,  // 利用規約に同意している
     };
 
     const result = signupSchema.safeParse(validData);
@@ -15,6 +16,7 @@ describe("signupSchema", () => {
     const invalidData = {
       email: "invalid-email",
       password: "password123",
+      terms: true,  // 利用規約には同意している
     };
 
     const result = signupSchema.safeParse(invalidData);
@@ -28,13 +30,14 @@ describe("signupSchema", () => {
     const invalidData = {
       email: "test@example.com",
       password: "short",
+      terms: true,  // 利用規約には同意している
     };
 
     const result = signupSchema.safeParse(invalidData);
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.errors[0].message).toBe(
-        "パスワードは6文字以上で入力してください",
+        "パスワードは6文字以上で入力してください"
       );
     }
   });
@@ -43,6 +46,7 @@ describe("signupSchema", () => {
     const invalidData = {
       email: "",
       password: "",
+      terms: true,  // 利用規約には同意している
     };
 
     const result = signupSchema.safeParse(invalidData);
@@ -50,8 +54,22 @@ describe("signupSchema", () => {
     if (!result.success) {
       expect(result.error.errors[0].message).toBe("無効なメールアドレスです");
       expect(result.error.errors[1].message).toBe(
-        "パスワードは6文字以上で入力してください",
+        "パスワードは6文字以上で入力してください"
       );
+    }
+  });
+
+  it("should fail validation when terms is not accepted", () => {
+    const invalidData = {
+      email: "test@example.com",
+      password: "password123",
+      terms: false,  // 利用規約に同意していない
+    };
+
+    const result = signupSchema.safeParse(invalidData);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.errors[0].message).toBe("利用規約への同意が必要です");
     }
   });
 });

@@ -1,11 +1,12 @@
 import { Card } from "../_components/atoms/card/card";
-import { LoginForm } from "../_components/templates/login/form";
+import { ProfileRegistrationForm } from "../_components/templates/profile/form";
 import styles from "./page.module.scss";
 
-export default function Login() {
+export default function Profile() {
   return (
     <Card className={styles.page}>
-      <LoginForm />
+      <ProfileRegistrationForm />
     </Card>
+
   );
 }

@@ -1,13 +1,15 @@
+import logo from "@luna/app/_assets/images/logo.png";
+import Image from "next/image";
 import styles from "./header.module.scss";
-import { Menu } from "./menu/menu";
 
 export function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
-        <h1 className={styles.headerLogo}>HEADER</h1>
+        <div className={styles.logo}>
+          <Image src={logo} alt="logo" fill />
+        </div>
       </div>
-      <Menu />
     </header>
   );
 }

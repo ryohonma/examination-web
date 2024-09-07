@@ -1,0 +1,11 @@
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  a {
+    margin-top: 8px;
+    text-align: center;
+  }
+}

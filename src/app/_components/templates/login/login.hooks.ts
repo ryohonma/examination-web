@@ -1,27 +1,25 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDialog } from "@luna/context/dialog/dialog";
-import { createUser } from "@luna/lib/auth";
+import { login } from "@luna/lib/auth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { signupSchema } from "./validation-schema";
+import { loginSchema } from "./validation-schema";
 
-export const useSignup = () => {
+export const useLogin = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
-  } = useForm<z.infer<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
+  } = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
   });
 
   const { alert } = useDialog();
 
-  const submit = async (data: z.infer<typeof signupSchema>) => {
-    const res = await createUser(data.email, data.password);
-
-    if (res.message) {
-      await alert({ body: res.message });
-      return;
+  const submit = async ({ email, password }: z.infer<typeof loginSchema>) => {
+    const result = await login(email, password)
+    if (result) {
+      alert({ title: "エラー", body: result });
     }
   };
 

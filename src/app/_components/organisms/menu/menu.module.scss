@@ -19,7 +19,7 @@
     transition: all 0.4s;
     position: absolute;
     height: 2px;
-    background-color: #333;
+    background-color: $text;
 
     &:nth-of-type(1) {
       top: 30px;
@@ -94,7 +94,7 @@
   max-width: 1200px;
   height: 100vh;
   padding: 160px 60px;
-  background: rgba(158, 134, 119, 0.9);
+  background: $tertiary;
   z-index: 25;
   max-width: 280px;
 
@@ -132,18 +132,6 @@
         margin-right: 0;
       }
 
-      p.ttl {
-        font-size: min(calc(26 * 100vw / 1060), 26px);
-        margin-bottom: 0;
-        color: #fff;
-        margin-bottom: 30px;
-        font-weight: 400;
-        line-height: 1;
-        @include respond(sp) {
-          font-size: min(calc(36 * 100vw / 767), 36px);
-        }
-      }
-
       ul {
         width: 100%;
 
@@ -151,7 +139,7 @@
           list-style: none;
           margin-bottom: 40px;
 
-          p {
+          p, button, a {
             color: #fff;
             font-size: min(calc(26 * 100vw / 1060), 26px);
             margin-bottom: 0;
@@ -162,7 +150,6 @@
             }
           }
         }
-
       }
     }
   }
