@@ -44,5 +44,11 @@ export const RouteHandler = ({ children }: { children: React.ReactNode }) => {
     return null;
   }
 
+  // homeで表示するものがないので
+  if (pathname === pagesPath.$url().path) {
+    router.replace(pagesPath.timelines.$url().path);
+    return null;
+  }
+
   return children;
 };

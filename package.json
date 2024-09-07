@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "tsc": "tsc --noEmit",
-    "dev:path": "pathpida --ignorepath .gitignore --output ./src/constants",
+    "dev:path": "pathpida --ignorepath --enableStatic .gitignore --output ./src/constants",
     "format": "prettier --write .",
     "test": "jest"
   },
