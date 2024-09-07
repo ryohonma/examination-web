@@ -1,8 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { pagesPath } from "@luna/constants/$path";
+import { useAccount } from "@luna/context/account/account";
 import { useAuthUser } from "@luna/context/auth-user/auth-user";
 import { useDialog } from "@luna/context/dialog/dialog";
-import { getByUID, post, put } from '@luna/repository/firestore/account';
+import { post, put } from '@luna/repository/firestore/account';
 import { upload } from "@luna/repository/storage/upload";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -23,32 +24,24 @@ export const useProfileRegister = () => {
     resolver: zodResolver(profileSchema),
   });
 
-  const [accountId, setAccountId] = useState("");
   const { replace, push: navigate } = useRouter();
   const { authUser } = useAuthUser();
   const { alert } = useDialog();
+  const { account, setAccount } = useAccount();
 
   useEffect(() => {
-    if (!authUser?.uid) {
-      replace(pagesPath.login.$url().path);
-      return;
-    }
-
-    getByUID(authUser.uid).then((data) => {
-      if (data) {
-        setAccountId(data.id);
-        reset({
-          name: data.name,
-          birthday: data.birthday,
-          gender: data.gender,
-          profileIcon: data.icon,
-        });
-        if (data.icon) {
-          setImagePreview(data.icon);
-        }
+    if (account) {
+      reset({
+        name: account.name,
+        birthday: account.birthday,
+        gender: account.gender,
+        profileIcon: account.icon,
+      });
+      if (account.icon) {
+        setImagePreview(account.icon);
       }
-    });
-  }, [authUser, reset]);
+    }
+  }, [account, reset]);
 
 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -115,8 +108,17 @@ export const useProfileRegister = () => {
         icon: iconURL,
         uid: authUser.uid,
       }
-      accountId ? await put(accountId, payload) : await post(payload);
-      // navigate(pagesPath.timeline.$url().path);
+      if (account) {
+        await put(account.id, payload);
+        setAccount({
+          ...account,
+          ...payload,
+        });
+      } else {
+        const newAcc = await post(payload);
+        setAccount(newAcc);
+      }
+      navigate(pagesPath.timelines.$url().path);
 
     } catch (error) {
       alert({
@@ -133,6 +135,6 @@ export const useProfileRegister = () => {
     isSubmitting,
     handleFileChange,
     imagePreview,
-    isEditing: !!accountId,
+    isEditing: !!account,
   };
 };

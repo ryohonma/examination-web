@@ -7,7 +7,7 @@ import { Account } from "./model/account";
 const accountsCollection = collection(db, "accounts");
 
 // 新規アカウントを作成 (POST)
-export const post = async (account: Omit<Account, "id" | "createdAt" | "updatedAt">): Promise<string> => {
+export const post = async (account: Omit<Account, "id" | "createdAt" | "updatedAt">): Promise<Account> => {
   try {
     const newAccount = {
       ...account,
@@ -15,7 +15,10 @@ export const post = async (account: Omit<Account, "id" | "createdAt" | "updatedA
       updatedAt: Timestamp.now(),
     };
     const docRef = await addDoc(accountsCollection, newAccount);
-    return docRef.id;
+    return {
+      id: docRef.id,
+      ...newAccount
+    }
   } catch (error) {
     console.error(error);
     throw new Error("Failed to create account:" + error);
