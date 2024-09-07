@@ -8,12 +8,15 @@ type AccountContextType = {
   account: Account | null;
   setAccount: (account: Account) => void;
   loadAccount: (uid: string) => Promise<void>;
+  loading: boolean;
 };
+
 
 const defaultAccountContext: AccountContextType = {
   account: null,
   setAccount: () => { },
   loadAccount: async () => { },
+  loading: true,
 };
 
 const AccountContext = createContext<AccountContextType>(defaultAccountContext);
@@ -21,6 +24,7 @@ const AccountContext = createContext<AccountContextType>(defaultAccountContext);
 export const AccountProvider = ({ children }: { children: React.ReactNode }) => {
   const { authUser } = useAuthUser();
   const [account, setAccountState] = useState<Account | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const setAccount = useCallback((newAccount: Account) => {
     setAccountState(newAccount);
@@ -32,6 +36,7 @@ export const AccountProvider = ({ children }: { children: React.ReactNode }) => 
       if (loadedAccount) {
         setAccount(loadedAccount);
       }
+      setLoading(false);
     } catch (error) {
       console.error("Accountのロード中にエラーが発生しました", error);
     }
@@ -49,6 +54,7 @@ export const AccountProvider = ({ children }: { children: React.ReactNode }) => 
         account,
         setAccount,
         loadAccount,
+        loading,
       }}
     >
       {children}

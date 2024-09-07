@@ -6,6 +6,7 @@ interface Props {
   name: string;
   placeholder?: string;
   register?: UseFormRegisterReturn;
+  maxLength?: number;
 }
 
 export const Textarea = ({
@@ -13,6 +14,7 @@ export const Textarea = ({
   placeholder = "",
   name = "",
   register,
+  maxLength = 140,
 }: Props) => {
   return (
     <textarea
@@ -20,6 +22,7 @@ export const Textarea = ({
       name={name}
       className={`${style.root} ${className}`}
       placeholder={placeholder}
+      maxLength={maxLength}
       {...register}
     />
   );

@@ -1,43 +1,43 @@
-  @import 'src/app/variables.scss';
+@import "src/app/variables.scss";
 
-  .header {
+.header {
+  height: min(calc(80 * 100vw / 1060), 80px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  @include respond(sp) {
+    height: 60px;
+  }
+
+  &Container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
     height: min(calc(80 * 100vw / 1060), 80px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: $white;
+    z-index: 10;
+    padding: 0 min(calc(50 * 100vw / 1060), 50px);
 
     @include respond(sp) {
-      height: 95px;
+      height: 60px;
+      padding: 10px 20px;
     }
 
-    &Container {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: min(calc(80 * 100vw / 1060), 80px);
-      background: $white;
-      z-index: 10;
-      padding: 0 min(calc(50 * 100vw / 1060), 50px);
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
 
       @include respond(sp) {
-        height: 60px;
-        padding: 10px 20px;
+        align-items: flex-start;
+        width: fit-content;
       }
 
-      .logo {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 100%;
-
-        @include respond(sp) {
-          align-items: flex-start;
-          width: fit-content;
-        }
-
-         img {
-            position: initial !important;
-            width: auto !important;
-         }
+      img {
+        position: initial !important;
+        width: auto !important;
       }
     }
   }
+}

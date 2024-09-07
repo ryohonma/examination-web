@@ -11,7 +11,7 @@ export const RouteHandler = ({
   children: React.ReactNode;
 }) => {
   const { authUser, loading } = useAuthUser();
-  const { account } = useAccount();
+  const { account, loading: loadingAccount } = useAccount();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -34,7 +34,7 @@ export const RouteHandler = ({
   }
 
   // ユーザーが登録を完了していない場合、プロフィールページへリダイレクト
-  if (authUser && !account && pathname !== pagesPath.profile.$url().path) {
+  if (authUser && !loadingAccount && !account && pathname !== pagesPath.profile.$url().path) {
     router.replace(pagesPath.profile.$url().path);
     return null;
   }

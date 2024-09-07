@@ -1,9 +1,11 @@
-import { Card } from "../_components/atoms/card/card";
-import styles from "./page.module.scss";
+import { MessageListComponent } from "../_components/templates/timelines/list/message-list";
+import { MessagePostComponent } from "../_components/templates/timelines/post/message-post";
 
 export default function Timelines() {
   return (
-    <Card className={styles.page}>
-    </Card>
+    <>
+      <MessageListComponent />
+      <MessagePostComponent />
+    </>
   );
 }
