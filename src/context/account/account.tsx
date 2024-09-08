@@ -43,6 +43,8 @@ export const AccountProvider = ({
 
   const loadAccount = useCallback(
     async (uid: string) => {
+      setLoading(true);
+      setAccountState(null);
       try {
         const loadedAccount = await getByUID(uid);
         if (loadedAccount) {

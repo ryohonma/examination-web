@@ -23,15 +23,18 @@ export const RouteHandler = ({ children }: { children: React.ReactNode }) => {
     return null;
   }
 
-  // 認証済みのユーザーがログインまたはサインアップページにアクセスした場合、プロファイルページへリダイレクト
+  // 認証済みでプロフィールが完了している場合、timelineへリダイレクト
   if (
     authUser &&
+    !loadingAccount &&
+    account &&
     (pathname === pagesPath.login.$url().path ||
       pathname === pagesPath.signup.$url().path)
   ) {
-    router.replace(pagesPath.profile.$url().path);
+    router.replace(pagesPath.timelines.$url().path);
     return null;
   }
+
 
   // ユーザーが登録を完了していない場合、プロフィールページへリダイレクト
   if (
