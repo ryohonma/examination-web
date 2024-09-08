@@ -1,5 +1,10 @@
 @import "src/app/variables.scss";
 .root {
+  label {
+    display: block;
+    margin-bottom: 4px;
+  }
+
   select {
     height: 56px;
     padding: 0 10px;

@@ -1,6 +1,11 @@
 @import "src/app/variables.scss";
 
 .root {
+  label {
+    display: block;
+    margin-bottom: 4px;
+  }
+
   .selectImage {
     display: flex;
     justify-content: center;

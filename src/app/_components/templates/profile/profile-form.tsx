@@ -42,6 +42,12 @@ const ProfileRegistrationFormComponent = ({
         name="gender"
         error={errors.gender}
         register={register("gender")}
+        options={[
+          { value: "male", label: "男性" },
+          { value: "female", label: "女性" },
+          { value: "other", label: "その他" }
+
+        ]}
       />
 
       <ImageInput
