@@ -49,6 +49,7 @@ export type PagesPath = typeof pagesPath;
 
 export const staticPath = {
   images: {
+    footer_logo_png: "/images/footer-logo.png",
     logo_png: "/images/logo.png",
   },
 } as const;

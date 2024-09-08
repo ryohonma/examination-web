@@ -1,7 +1,8 @@
 "use client";
-import Image from "next/image";
 import { Button } from "../../atoms/button/button";
+import { Select } from "../../atoms/select/select";
 import { TextField } from "../../atoms/text-field/text-field";
+import { ImageInput } from "../../molcures/image-input/image-input";
 import styles from "./profile-form.module.scss";
 import { useProfileRegister } from "./profile-register.hooks";
 
@@ -36,46 +37,21 @@ const ProfileRegistrationFormComponent = ({
         register={register("birthday")}
       />
 
-      <div>
-        <label htmlFor="gender">性別</label>
-        <select {...register("gender")}>
-          <option value="">選択してください</option>
-          <option value="male">男性</option>
-          <option value="female">女性</option>
-          <option value="other">その他</option>
-        </select>
-        {errors.gender && <span>{errors.gender.message}</span>}
-      </div>
+      <Select
+        title="性別"
+        name="gender"
+        error={errors.gender}
+        register={register("gender")}
+      />
 
-      <div>
-        <label htmlFor="fileInput">プロフィールアイコン</label>
-        <div className={styles.profileIconSelect}>
-          {!imagePreview && (
-            <label htmlFor="fileInput">ファイルを選択してください</label>
-          )}
-          <input
-            id="fileInput"
-            type="file"
-            accept="image/*"
-            {...register("profileIcon")}
-            onChange={handleFileChange}
-          />
-
-          {imagePreview && (
-            <div className={styles.imagePreview}>
-              <Image
-                width={80}
-                height={80}
-                src={imagePreview}
-                alt="プロフィールアイコンのプレビュー"
-              />
-            </div>
-          )}
-        </div>
-        {errors.profileIcon && (
-          <span>{errors.profileIcon.message?.toString()}</span>
-        )}
-      </div>
+      <ImageInput
+        title="プロフィールアイコン"
+        name="profileIcon"
+        register={register("profileIcon")}
+        error={errors.profileIcon}
+        onChange={handleFileChange}
+        defaultSrc={imagePreview}
+      />
 
       <Button loading={isSubmitting} type="submit" showAllow>
         登録

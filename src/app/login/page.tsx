@@ -5,6 +5,7 @@ import styles from "./page.module.scss";
 export default function Login() {
   return (
     <Card className={styles.page}>
+      <h2>ログイン</h2>
       <LoginForm />
     </Card>
   );

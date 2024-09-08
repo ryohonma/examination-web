@@ -52,7 +52,7 @@ export function Menu() {
                     }
                     href={pagesPath.profile.$url().pathname}
                   >
-                    プロフィール
+                    <span>プロフィール</span>
                   </Link>
                 </li>
               </ul>
