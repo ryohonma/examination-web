@@ -15,7 +15,7 @@ type Message = BaseMessage & {
 export const useMessages = (initialLimit = 20) => {
   const { authUser } = useAuthUser();
   const [messages, setMessages] = useState<Message[]>([]);
-  const lastOffset = useRef<number>(0);
+  const lastOffset = useRef<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasMore, setHasMore] = useState<boolean>(true);
 
@@ -74,7 +74,7 @@ export const useMessages = (initialLimit = 20) => {
           ...mergedMessages,
         ];
 
-        lastOffset.current = allMessages.length;
+        lastOffset.current = allMessages[allMessages.length - 1].id;
 
         return allMessages;
       });
@@ -103,7 +103,7 @@ export const useMessages = (initialLimit = 20) => {
             ...prevMessages.filter((msg) => !newMessageIds.has(msg.id)),
             ...mergedMessages,
           ];
-          lastOffset.current = allMessages.length;
+          lastOffset.current = allMessages[allMessages.length - 1].id;
 
           return allMessages;
         });

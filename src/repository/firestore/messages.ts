@@ -5,6 +5,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   limit,
   onSnapshot,
@@ -68,38 +69,31 @@ export const remove = async (messageId: string): Promise<void> => {
   }
 };
 
-// メッセージをlimitとoffsetを指定して取得 (LIST)
+// メッセージをlimitとlastDocumentIDを指定して取得 (LIST)
 export const list = async (
   limitCount: number,
-  offset: number = 0,
+  lastDocumentId?: string | null,
 ): Promise<Message[]> => {
   try {
-    const q = query(
+    let q = query(
       messagesCollection,
       orderBy("createdAt", "desc"),
       limit(limitCount),
     );
 
-    const querySnapshot = await getDocs(q);
+    if (lastDocumentId) {
+      // lastDocumentIDからドキュメント参照を作成
+      const lastDocRef = doc(messagesCollection, lastDocumentId);
+      const lastDocSnap = await getDoc(lastDocRef);
 
-    if (offset > 0) {
-      const lastVisible = querySnapshot.docs[offset - 1];
-      if (lastVisible) {
-        const paginatedQuery = query(
-          messagesCollection,
-          orderBy("createdAt", "desc"),
-          startAfter(lastVisible),
-          limit(limitCount),
-        );
-        const paginatedSnapshot = await getDocs(paginatedQuery);
-        return paginatedSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Message[];
+      // 指定されたドキュメントIDから開始するようにクエリを変更
+      if (lastDocSnap.exists()) {
+        q = query(q, startAfter(lastDocSnap));
       }
     }
 
-    return querySnapshot.docs.map((doc) => ({
+    const snaps = await getDocs(q);
+    return snaps.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     })) as Message[];
