@@ -1,10 +1,18 @@
+@import "src/app/variables.scss";
+
 .page {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 780px;
+  @include respond(pc) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 780px;
+  }
+
+  @include respond(sp) {
+    margin: 20px 0;
+  }
 
   h2 {
     text-align: center;
