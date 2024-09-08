@@ -1,4 +1,5 @@
 import { useAuthUser } from "@luna/context/auth-user/auth-user";
+import { captureException } from "@luna/lib/error";
 import { listByUIDs } from "@luna/repository/firestore/account";
 import { list, listBySnapshot } from "@luna/repository/firestore/messages";
 import { Account } from "@luna/repository/firestore/model/account";
@@ -108,7 +109,7 @@ export const useMessages = (initialLimit = 20) => {
         });
       }
     } catch (error) {
-      console.error("Failed to load more messages: ", error);
+      captureException("failed to load more messages", error);
     }
 
     setIsLoading(false);

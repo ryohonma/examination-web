@@ -3,12 +3,18 @@ import { pagesPath } from "@luna/constants/$path";
 import Link from "next/link";
 import { Button } from "../../atoms/button/button";
 import { TextField } from "../../atoms/text-field/text-field";
-import styles from "./form.module.scss";
 import { useSignup } from "./signup.hooks";
+import styles from "./singup-form.module.scss";
 
-export const SignupForm = () => {
-  const { handleSubmit, register, errors, isSubmitting, isValid } = useSignup();
+export const SignupForm = () => <SignupFormComponent {...useSignup()} />;
 
+const SignupFormComponent = ({
+  handleSubmit,
+  register,
+  errors,
+  isSubmitting,
+  isValid,
+}: ReturnType<typeof useSignup>) => {
   return (
     <form className={styles.root} onSubmit={handleSubmit}>
       <TextField

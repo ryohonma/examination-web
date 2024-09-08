@@ -24,7 +24,7 @@ export const login = async (
     if (!err) throw new Error("failed to handle email login error");
 
     return new Promise<string>((resolve) => {
-      const msg = getAuthErrorMessage(err, "signin/popup");
+      const msg = getAuthErrorMessage(err, "signin");
       resolve(msg || "");
     });
   }
@@ -80,7 +80,7 @@ export const getAuthErrorMessage = (e: FirebaseError, method: string) => {
     case AuthErrorCodes.USER_DELETED:
       return "メールアドレスまたはパスワードが違います";
     case AuthErrorCodes.USER_MISMATCH:
-      if (method === "signin/popup") {
+      if (method === "signin") {
         return "認証されているユーザーと異なるアカウントが選択されました";
       }
 
@@ -102,7 +102,7 @@ export const getAuthErrorMessage = (e: FirebaseError, method: string) => {
     case AuthErrorCodes.CREDENTIAL_TOO_OLD_LOGIN_AGAIN:
       return "認証の有効期限が切れています。ログインしなおしてください。";
     default:
-      if (method.indexOf("signin") !== -1) {
+      if (method !== "signin") {
         return "認証に失敗しました。しばらく時間をおいて再度お試しください";
       }
 

@@ -1,6 +1,8 @@
 "use client";
 import { Account } from "@luna//repository/firestore//model/account";
+import { captureException } from "@luna/lib/error";
 import { getByUID } from "@luna/repository/firestore/account";
+import { emptyFunction, emptyFunctionWithPromise } from "@luna/utils/utils";
 import {
   createContext,
   useCallback,
@@ -19,8 +21,8 @@ type AccountContextType = {
 
 const defaultAccountContext: AccountContextType = {
   account: null,
-  setAccount: () => {},
-  loadAccount: async () => {},
+  setAccount: emptyFunction,
+  loadAccount: emptyFunctionWithPromise,
   loading: true,
 };
 
@@ -48,7 +50,7 @@ export const AccountProvider = ({
         }
         setLoading(false);
       } catch (error) {
-        console.error("Accountのロード中にエラーが発生しました", error);
+        captureException("failed to load account", error);
       }
     },
     [setAccount],

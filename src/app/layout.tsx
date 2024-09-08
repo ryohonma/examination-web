@@ -1,6 +1,7 @@
 import { AccountProvider } from "@luna/context/account/account";
 import { AuthUserProvider } from "@luna/context/auth-user/auth-user";
 import { DialogProvider } from "@luna/context/dialog/dialog";
+import { SnackbarProvider } from "@luna/context/snackbar/snackbar";
 import { generateMetadata } from "@luna/lib/generate-metadata";
 import { M_PLUS_1 } from "next/font/google";
 import { Footer } from "./_components/organisms/footer/footer";
@@ -37,14 +38,16 @@ export default function RootLayout({
         <Header />
         <main>
           <DialogProvider>
-            <AuthUserProvider>
-              <AccountProvider>
-                <RouteHandler>
-                  <Menu />
-                  {children}
-                </RouteHandler>
-              </AccountProvider>
-            </AuthUserProvider>
+            <SnackbarProvider>
+              <AuthUserProvider>
+                <AccountProvider>
+                  <RouteHandler>
+                    <Menu />
+                    {children}
+                  </RouteHandler>
+                </AccountProvider>
+              </AuthUserProvider>
+            </SnackbarProvider>
           </DialogProvider>
         </main>
         <Footer />

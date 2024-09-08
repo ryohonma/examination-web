@@ -15,11 +15,15 @@
     "plugins": [
       {
         "name": "next"
+      },
+      {
+        "name": "typescript-plugin-css-modules"
       }
     ],
     "paths": {
       "@luna/*": ["./src/*"]
-    }
+    },
+    "rootDirs": [".", "./type/__generated"]
   },
   "include": [
     "next-env.d.ts",

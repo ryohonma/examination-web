@@ -1,0 +1,35 @@
+@import "src/app/variables.scss";
+.snackbar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+}
+
+.snackbar.success {
+  background-color: $success;
+}
+
+.snackbar.error {
+  background-color: $error;
+}
+
+.snackbar.warning {
+  background-color: $warning;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}

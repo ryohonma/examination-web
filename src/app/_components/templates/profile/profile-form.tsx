@@ -2,20 +2,22 @@
 import Image from "next/image";
 import { Button } from "../../atoms/button/button";
 import { TextField } from "../../atoms/text-field/text-field";
-import styles from "./form.module.scss";
+import styles from "./profile-form.module.scss";
 import { useProfileRegister } from "./profile-register.hooks";
 
-export const ProfileRegistrationForm = () => {
-  const {
-    isEditing,
-    handleFileChange,
-    imagePreview,
-    handleSubmit,
-    register,
-    errors,
-    isSubmitting,
-  } = useProfileRegister();
+export const ProfileRegistrationForm = () => (
+  <ProfileRegistrationFormComponent {...useProfileRegister()} />
+);
 
+const ProfileRegistrationFormComponent = ({
+  isEditing,
+  handleFileChange,
+  imagePreview,
+  handleSubmit,
+  register,
+  errors,
+  isSubmitting,
+}: ReturnType<typeof useProfileRegister>) => {
   return (
     <form className={styles.root} onSubmit={handleSubmit}>
       <h2>{`プロフィール${isEditing ? "編集" : "登録"}`}</h2>
@@ -34,7 +36,7 @@ export const ProfileRegistrationForm = () => {
         register={register("birthday")}
       />
 
-      <div className={styles.gender}>
+      <div>
         <label htmlFor="gender">性別</label>
         <select {...register("gender")}>
           <option value="">選択してください</option>

@@ -3,6 +3,8 @@ import { pagesPath } from "@luna/constants/$path";
 import { useAccount } from "@luna/context/account/account";
 import { useAuthUser } from "@luna/context/auth-user/auth-user";
 import { useDialog } from "@luna/context/dialog/dialog";
+import { useSnackbar } from "@luna/context/snackbar/snackbar";
+import { captureException } from "@luna/lib/error";
 import { post, put } from "@luna/repository/firestore/account";
 import { upload } from "@luna/repository/storage/upload";
 import { useRouter } from "next/navigation";
@@ -14,6 +16,7 @@ import { profileSchema } from "./validation-schema";
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 export const useProfileRegister = () => {
+  const { showSuccess } = useSnackbar();
   const {
     register,
     handleSubmit,
@@ -90,7 +93,7 @@ export const useProfileRegister = () => {
         const path = `avatars/${authUser.uid}/${file.name}`;
         iconURL = await upload(path, file); // アップロード後、ダウンロードURLを取得
       } catch (error) {
-        console.error(error);
+        captureException("failed to upload profile icon", error);
         alert({
           title: "プロフィール登録失敗",
           body: "プロフィールアイコンのアップロードに失敗しました。",
@@ -117,9 +120,11 @@ export const useProfileRegister = () => {
         const newAcc = await post(payload);
         setAccount(newAcc);
       }
+      showSuccess("プロフィールを登録しました");
+
       navigate(pagesPath.timelines.$url().path);
     } catch (error) {
-      console.error(error);
+      captureException("failed to register profile", error);
       alert({
         title: "プロフィール登録失敗",
         body: "プロフィールの登録に失敗しました。",

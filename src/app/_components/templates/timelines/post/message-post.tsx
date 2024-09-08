@@ -1,51 +1,25 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@luna/app/_components/atoms/button/button";
 import { Textarea } from "@luna/app/_components/atoms/text-area/text-area";
-import { useAuthUser } from "@luna/context/auth-user/auth-user";
-import { post } from "@luna/repository/firestore/messages";
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
+import { Controller } from "react-hook-form";
+import { useMessagePost } from "./message-post.hooks";
 import styles from "./message-post.module.scss";
 
-const postSchema = z.object({
-  text: z
-    .string()
-    .min(1, "テキストを入力してください")
-    .max(140, "140文字以内で入力してください"),
-});
+export const MessagePost = () => <MessagePostComponent {...useMessagePost()} />;
 
-export const MessagePostComponent = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { authUser } = useAuthUser();
-
-  const {
-    watch,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(postSchema),
-    defaultValues: { text: "" },
-  });
-
-  const onSubmit = (data: { text: string }) => {
-    if (!authUser) return;
-
-    post({
-      content: data.text,
-      uid: authUser.uid,
-    });
-    setIsOpen(false);
-  };
-
+const MessagePostComponent = ({
+  isOpen,
+  setIsOpen,
+  watch,
+  control,
+  handleSubmit,
+  errors,
+  onSubmit,
+}: ReturnType<typeof useMessagePost>) => {
   return (
     <>
-      {/* 常時表示のボタン */}
-      <button className={styles.postButton} onClick={() => setIsOpen(true)}>
-        <div className={styles.plusIcon} />
-      </button>
+      {/* 投稿ボタン */}
+      <button className={styles.postButton} onClick={() => setIsOpen(true)} />
 
       {/* スライドインの投稿コンポーネント */}
       <div className={`${styles.drawer} ${isOpen ? styles.open : ""}`}>
@@ -86,15 +60,12 @@ export const MessagePostComponent = () => {
             <Button
               type="button"
               shape="outline"
-              className={styles.cancelButton}
               onClick={() => setIsOpen(false)}
             >
               キャンセル
             </Button>
 
-            <Button type="submit" className={styles.submitButton}>
-              投稿する
-            </Button>
+            <Button type="submit">投稿する</Button>
           </div>
         </form>
       </div>

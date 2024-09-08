@@ -1,3 +1,4 @@
+import { captureException } from "@luna/lib/error";
 import { db } from "@luna/lib/firebase";
 import {
   addDoc,
@@ -33,7 +34,7 @@ export const post = async (
       ...newMessage,
     };
   } catch (error) {
-    console.error(error);
+    captureException("Failed to create message", error);
     throw new Error("Failed to create message: " + error);
   }
 };
@@ -51,7 +52,7 @@ export const put = async (
     };
     await setDoc(messageDocRef, updatedMessage, { merge: true }); // 部分更新
   } catch (error) {
-    console.error(error);
+    captureException("Failed to update message", error);
     throw new Error("Failed to update message: " + error);
   }
 };
@@ -62,7 +63,7 @@ export const remove = async (messageId: string): Promise<void> => {
     const messageDocRef = doc(messagesCollection, messageId);
     await deleteDoc(messageDocRef);
   } catch (error) {
-    console.error(error);
+    captureException("Failed to delete message", error);
     throw new Error("Failed to delete message: " + error);
   }
 };
@@ -103,7 +104,7 @@ export const list = async (
       ...doc.data(),
     })) as Message[];
   } catch (error) {
-    console.error(error);
+    captureException("Failed to list messages", error);
     throw new Error("Failed to list messages: " + error);
   }
 };
@@ -161,7 +162,7 @@ export const listBySnapshot = (
 
     return unsubscribe;
   } catch (error) {
-    console.error("Failed to list messages with realtime updates: ", error);
+    captureException("Failed to list messages with realtime updates", error);
     throw new Error("Failed to list messages with realtime updates");
   }
 };

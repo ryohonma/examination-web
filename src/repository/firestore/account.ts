@@ -1,3 +1,4 @@
+import { captureException } from "@luna/lib/error";
 import { db } from "@luna/lib/firebase";
 import {
   addDoc,
@@ -30,7 +31,7 @@ export const post = async (
       ...newAccount,
     };
   } catch (error) {
-    console.error(error);
+    captureException("Failed to create account", error);
     throw new Error("Failed to create account:" + error);
   }
 };
@@ -48,7 +49,7 @@ export const put = async (
     };
     await setDoc(accountDocRef, updatedAccount, { merge: true }); // 部分更新
   } catch (error) {
-    console.error(error);
+    captureException("Failed to update account", error);
     throw new Error("Failed to update account" + error);
   }
 };
@@ -69,7 +70,7 @@ export const getByUID = async (UID: string): Promise<Account | null> => {
       ...doc.data(),
     } as Account;
   } catch (error) {
-    console.error(error);
+    captureException("Failed to get account by UID", error);
     throw new Error("Failed to get account by UID:" + error);
   }
 };
@@ -92,7 +93,7 @@ export const listByUIDs = async (UIDs: string[]): Promise<Account[]> => {
 
     return accounts;
   } catch (error) {
-    console.error(error);
+    captureException("Failed to list accounts by UIDs", error);
     throw new Error("Failed to list accounts by UIDs:" + error);
   }
 };

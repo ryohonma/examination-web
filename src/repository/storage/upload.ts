@@ -1,3 +1,4 @@
+import { captureException } from "@luna/lib/error";
 import { storage } from "@luna/lib/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
@@ -23,7 +24,7 @@ export const upload = async (
 
     return downloadURL;
   } catch (error) {
-    console.error("ファイルのアップロードに失敗しました: ", error);
+    captureException("Failed to upload file", error);
     throw new Error("Failed to upload file");
   }
 };

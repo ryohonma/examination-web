@@ -1,10 +1,12 @@
 import { useDialog } from "@luna/context/dialog/dialog";
+import { useSnackbar } from "@luna/context/snackbar/snackbar";
+import { captureException } from "@luna/lib/error";
 import { remove } from "@luna/repository/firestore/messages";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./message-item.module.scss";
 
-type MessageProps = {
+type MessageItemProps = {
   id: string;
   userName: string;
   userIcon: string;
@@ -20,9 +22,10 @@ export const MessageItem = ({
   createdAt,
   content,
   canDelete,
-}: MessageProps) => {
+}: MessageItemProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const { confirm, alert } = useDialog();
+  const { showSuccess } = useSnackbar();
 
   // 投稿削除の処理
   const handleDelete = async () => {
@@ -33,8 +36,9 @@ export const MessageItem = ({
 
     try {
       await remove(id);
+      showSuccess("メッセージを削除しました。");
     } catch (error) {
-      console.error("メッセージの削除に失敗しました:", error);
+      captureException("failed to delete message", error);
       alert({ body: "メッセージの削除に失敗しました。" });
     }
   };

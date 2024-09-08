@@ -139,7 +139,9 @@
           list-style: none;
           margin-bottom: 40px;
 
-          p, button, a {
+          p,
+          button,
+          a {
             color: #fff;
             font-size: min(calc(26 * 100vw / 1060), 26px);
             margin-bottom: 0;
@@ -147,6 +149,25 @@
 
             @include respond(sp) {
               font-size: min(calc(36 * 100vw / 767), 36px);
+            }
+          }
+
+          .active {
+            font-weight: bold;
+
+            // text-decoration: underline; だとくっつきすぎるので擬似要素で下線を引く
+            > span {
+              display: block;
+              width: fit-content;
+
+              &:after {
+                content: "";
+                display: block;
+                border: $white 0 solid;
+                border-bottom-width: 2px;
+                margin-top: 3px;
+                width: 100%;
+              }
             }
           }
         }

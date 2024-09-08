@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "tsc": "tsc --noEmit",
-    "dev:path": "pathpida --ignorepath --enableStatic .gitignore --output ./src/constants",
+    "tsc": "yarn gen:styles && tsc --noEmit",
     "format": "prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "gen:path": "pathpida --ignorepath --enableStatic .gitignore --output ./src/constants",
+    "gen:styles": "typed-scss-modules src -c -o ./type/__generated"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -42,6 +43,8 @@
     "pathpida": "^0.22.0",
     "prettier": "^3.3.3",
     "ts-jest": "^29.2.5",
-    "typescript": "^5"
+    "typed-scss-modules": "^8.0.1",
+    "typescript": "^5",
+    "typescript-plugin-css-modules": "^5.1.0"
   }
 }

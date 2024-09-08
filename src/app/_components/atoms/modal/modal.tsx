@@ -32,7 +32,7 @@ export const Modal = ({
         </button>
 
         <div className={styles.contents}>
-          {title && <h4 className={styles.title}>{title}</h4>}
+          {title && <h4>{title}</h4>}
           {children}
         </div>
 

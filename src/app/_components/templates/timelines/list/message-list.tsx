@@ -1,12 +1,20 @@
 "use client";
 
 import LoadingIcon from "@luna/app/_assets/images/icon-loading.svg";
+import { MessageLoadCount } from "@luna/constants/constants";
 import { useCallback, useEffect, useRef } from "react";
 import { MessageItem } from "./message-item";
 import { useMessages } from "./message-list.hooks";
 
-export const MessageListComponent = () => {
-  const { messages, loadMoreMessages, hasMore, isLoading } = useMessages(1000);
+export const MessageList = () => (
+  <MessageListComponent {...useMessages(MessageLoadCount)} />
+);
+const MessageListComponent = ({
+  messages,
+  loadMoreMessages,
+  hasMore,
+  isLoading,
+}: ReturnType<typeof useMessages>) => {
   const lastReloadedPosition = useRef(-1);
 
   // スクロール位置が一番下になったら、loadMoreMessagesを呼び出す

@@ -25,6 +25,8 @@ export function Menu() {
     return null;
   }
 
+  const isActive = (path: string) => pathname === path;
+
   return (
     <>
       <button
@@ -41,32 +43,40 @@ export function Menu() {
           <div className={styles.inner}>
             <section>
               <ul>
-                {" "}
                 <li>
-                  {" "}
-                  <Link href={pagesPath.profile.$url().pathname}>
+                  <Link
+                    className={
+                      isActive(pagesPath.profile.$url().pathname)
+                        ? styles.active
+                        : ""
+                    }
+                    href={pagesPath.profile.$url().pathname}
+                  >
                     プロフィール
-                  </Link>{" "}
-                </li>{" "}
+                  </Link>
+                </li>
               </ul>
               {account && (
                 <ul>
-                  {" "}
                   <li>
-                    {" "}
-                    <Link href={pagesPath.timelines.$url().pathname}>
-                      投稿一覧
-                    </Link>{" "}
-                  </li>{" "}
+                    <Link
+                      className={
+                        isActive(pagesPath.timelines.$url().pathname)
+                          ? styles.active
+                          : ""
+                      }
+                      href={pagesPath.timelines.$url().pathname}
+                    >
+                      <span>投稿一覧</span>
+                    </Link>
+                  </li>
                 </ul>
               )}
 
               <ul>
-                {" "}
                 <li>
-                  {" "}
-                  <button onClick={() => signOut()}>ログアウト</button>{" "}
-                </li>{" "}
+                  <button onClick={() => signOut()}>ログアウト</button>
+                </li>
               </ul>
             </section>
           </div>
