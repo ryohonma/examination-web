@@ -13,8 +13,9 @@ export const useMessagePost = () => {
 
   const {
     watch,
-    control,
+    register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(postSchema),
@@ -30,6 +31,7 @@ export const useMessagePost = () => {
         uid: authUser.uid,
       });
       setIsOpen(false);
+      reset({ text: "" });
     } catch (error) {
       captureException("failed to post message", error);
       return;
@@ -40,7 +42,7 @@ export const useMessagePost = () => {
     isOpen,
     setIsOpen,
     watch,
-    control,
+    register,
     handleSubmit,
     errors,
     onSubmit,

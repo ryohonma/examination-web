@@ -44,7 +44,7 @@ export const Select = ({
     <div className={`${styles.root} ${className}`}>
       {title && <label htmlFor={name}>{title}</label>}
       <select {...register}>{showOptions}</select>
-      {error && <span>{error.message}</span>}
+      {error && <span className={styles.error}>{error.message}</span>}
     </div>
   );
 };

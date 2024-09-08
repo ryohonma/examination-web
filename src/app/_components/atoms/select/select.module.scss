@@ -26,4 +26,10 @@
     font-size: 16px;
     color: $gray500;
   }
+
+  .error {
+    margin-top: 2px;
+    display: block;
+    color: $danger;
+  }
 }

@@ -1,13 +1,15 @@
-@import 'src/app/variables.scss';
+@import "src/app/variables.scss";
 
 .root {
   .title {
     display: block;
     margin-bottom: 4px;
   }
-  
+
   .error {
-    border-color: $danger;
+    margin-top: 2px;
+    display: block;
+    color: $danger;
   }
 
   input {

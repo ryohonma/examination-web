@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDialog } from "@luna/context/dialog/dialog";
+import { useSnackbar } from "@luna/context/snackbar/snackbar";
 import { createUser } from "@luna/lib/auth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,6 +16,7 @@ export const useSignup = () => {
   });
 
   const { alert } = useDialog();
+  const { showSuccess } = useSnackbar();
 
   const submit = async (data: z.infer<typeof signupSchema>) => {
     const res = await createUser(data.email, data.password);
@@ -23,6 +25,8 @@ export const useSignup = () => {
       await alert({ body: res.message });
       return;
     }
+
+    showSuccess("登録が完了しました。\nあなたのプロフィールを設定してください");
   };
 
   return {

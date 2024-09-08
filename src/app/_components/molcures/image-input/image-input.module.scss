@@ -37,4 +37,10 @@
       }
     }
   }
+
+  .error {
+    margin-top: 2px;
+    display: block;
+    color: $danger;
+  }
 }

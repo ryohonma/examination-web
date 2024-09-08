@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@luna/app/_components/atoms/button/button";
 import { Textarea } from "@luna/app/_components/atoms/text-area/text-area";
-import { Controller } from "react-hook-form";
 import { useMessagePost } from "./message-post.hooks";
 import styles from "./message-post.module.scss";
 
@@ -11,7 +10,7 @@ const MessagePostComponent = ({
   isOpen,
   setIsOpen,
   watch,
-  control,
+  register,
   handleSubmit,
   errors,
   onSubmit,
@@ -27,34 +26,25 @@ const MessagePostComponent = ({
           <h4>
             テキスト <span className={styles.required}>必須</span>
           </h4>
-          <Controller
-            name="text"
-            control={control}
-            render={({ field }) => (
-              <div>
-                <Textarea
-                  {...field}
-                  name="text"
-                  register={control.register(field.name, {
-                    required: "テキストを入力してください",
-                  })}
-                  placeholder="テキストを入力してください"
-                  maxLength={400}
-                />
+          <div>
+            <Textarea
+              name="text"
+              register={register("text")}
+              placeholder="テキストを入力してください"
+              maxLength={400}
+            />
 
-                <div className={styles.horizontal}>
-                  <span className={styles.error}>
-                    {errors.text?.message?.toString()}
-                  </span>
-                  <span
-                    className={`${styles.textCounter} ${watch("text").length > 140 ? styles.error : ""}`}
-                  >
-                    {`${watch("text").length} / 140`}
-                  </span>
-                </div>
-              </div>
-            )}
-          />
+            <div className={styles.horizontal}>
+              <span className={styles.error}>
+                {errors.text?.message?.toString()}
+              </span>
+              <span
+                className={`${styles.textCounter} ${watch("text").length > 140 ? styles.error : ""}`}
+              >
+                {`${watch("text").length} / 140`}
+              </span>
+            </div>
+          </div>
 
           <div className={styles.actions}>
             <Button
