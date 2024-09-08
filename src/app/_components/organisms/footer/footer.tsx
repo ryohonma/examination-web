@@ -40,7 +40,7 @@ export function Footer() {
 
           {/* SNSリンク */}
           <div className={styles.socialLinks}>
-            <Link href="https://twitter.com">
+            <Link target="_blank" href="https://twitter.com">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -53,7 +53,7 @@ export function Footer() {
                 ></path>
               </svg>
             </Link>
-            <Link href="https://facebook.com">
+            <Link target="_blank" href="https://facebook.com">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -66,7 +66,7 @@ export function Footer() {
                 />
               </svg>
             </Link>
-            <Link href="https://instagram.com">
+            <Link target="_blank" href="https://instagram.com">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

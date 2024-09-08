@@ -47,7 +47,9 @@ export const ImageInput = ({
           </div>
         )}
       </div>
-      {error && <span className={styles.error}>{error.message?.toString()}</span>}
+      {error && (
+        <span className={styles.error}>{error.message?.toString()}</span>
+      )}
     </div>
   );
 };
