@@ -35,5 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# generated
-type/__generated/
+# 'type/__generated'ディレクトリ以下を無視
+types/__generated/** 

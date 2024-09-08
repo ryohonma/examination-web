@@ -23,14 +23,15 @@
     "paths": {
       "@luna/*": ["./src/*"]
     },
-    "rootDirs": [".", "./type/__generated"]
+    "rootDirs": [".", "./types/__generated"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "svg.d.ts"
+    "types/svg.d.ts",
+    "types/global.d.ts"
   ],
   "exclude": ["node_modules"]
 }
