@@ -35,7 +35,6 @@ export const RouteHandler = ({ children }: { children: React.ReactNode }) => {
     return null;
   }
 
-
   // ユーザーが登録を完了していない場合、プロフィールページへリダイレクト
   if (
     authUser &&
