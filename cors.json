@@ -1,9 +1,8 @@
 [
   {
-    "origin": ["http://localhost:3002", "http://localhost:3001", "http://localhost:3000", "https://luna-examination-web.vercel.app"],
+    "origin": ["https://luna-examination-web.vercel.app"],
     "method": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     "maxAgeSeconds": 3600,
     "responseHeader": ["Content-Type", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Methods"]
-
   }
 ]
