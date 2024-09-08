@@ -38,8 +38,14 @@
       color: $danger;
     }
 
-    textarea {
-      min-height: 240px;
+    .textContainer {
+      flex: 1;
+      max-height: calc(100% - 120px);
+
+      textarea {
+        max-height: 240px;
+        height: 100%;
+      }
     }
 
     .textCounter {

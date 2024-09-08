@@ -26,7 +26,7 @@ const MessagePostComponent = ({
           <h4>
             テキスト <span className={styles.required}>必須</span>
           </h4>
-          <div>
+          <div className={styles.textContainer}>
             <Textarea
               name="text"
               register={register("text")}
