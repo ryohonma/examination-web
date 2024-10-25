@@ -18,12 +18,11 @@ const mplus1 = M_PLUS_1({
 });
 
 export const metadata = generateMetadata({
-  title: "【テストサイト】ryohonma-dev",
-  description: "luna様への課題提出用のテストサイトです",
-  keywords: "ryohonma, luna, 課題提出",
+  title: "post-distribution-web",
+  description: "投稿配信サイト",
   openGraph: {
-    description: "luna様への課題提出用のテストサイトです",
-    url: "https://example.com/",
+    description: "投稿配信サイト",
+    url: "https://luna-examination-web.vercel.app/timelines",
   },
 });
 
